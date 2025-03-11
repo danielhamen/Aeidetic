@@ -7,6 +7,7 @@ export const ClockContext = React.createContext<ClockContextProps | null>(null);
 
 export function ClockProvider({ children }: { children: React.ReactNode }) {
   const [currentTime, setCurrentTime] = useState<number>(useTime());
+  const [radius, setRadius] = useState(300);
   const [currentHour, setCurrentHour] = useState(0);
   const [currentMinute, setCurrentMinute] = useState(0);
   const [currentSecond, setCurrentSecond] = useState(0);
@@ -25,6 +26,8 @@ export function ClockProvider({ children }: { children: React.ReactNode }) {
         currentHour,
         currentMinute,
         currentSecond,
+        radius,
+        setRadius,
       }}
     >
       {children}
@@ -38,6 +41,8 @@ export interface ClockContextProps {
   currentHour: number;
   currentMinute: number;
   currentSecond: number;
+  radius: number;
+  setRadius: (radius: number) => void;
 }
 
 export function useClock(): ClockContextProps {
@@ -82,11 +87,6 @@ export interface HandProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Hand({ angle, length, ...props }: HandProps) {
-  angle %= 360;
-  if (angle === 0) angle = 360;
-
-  angle -= 90;
-
   return (
     <Flex
       {...props}
@@ -94,7 +94,7 @@ export function Hand({ angle, length, ...props }: HandProps) {
       style={{
         width: length,
         height: 8,
-        rotate: `${angle}deg`,
+        rotate: `${angle - (90 % 360)}deg`,
         left: "50%",
         top: "50%",
         transformOrigin: "left center",
@@ -105,50 +105,15 @@ export function Hand({ angle, length, ...props }: HandProps) {
   );
 }
 
-export function Clock() {
-  const { currentHour, currentMinute, currentSecond } = useClock();
-  const toAngle = (v: number, max: number) => (v / max) * 360;
-  const radius = 300;
-  const [iterMap] = useState<null[]>(new Array(60).fill(null));
+/**
+ * Creates the ticks and numbers
+ */
+export function Contour() {
+  const { radius } = useClock();
+  const [iterMap] = useState(() => new Array(60).fill(null));
+
   return (
-    <Flex
-      className={`relative outline-gray-300 bg-red-300 rounded-full`}
-      style={{
-        width: radius * 2,
-        outlineWidth: 16,
-        outlineStyle: "solid",
-        height: radius * 2,
-      }}
-      align="center"
-      justify="center"
-    >
-      {/* Center dot */}
-      <Flex className={`size-2 bg-white rounded-full absolute z-20`} />
-
-      {/* Second */}
-      <Hand
-        angle={toAngle(currentSecond, 60)}
-        length={radius}
-        className="z-10"
-      />
-
-      {/* Minute */}
-      <Hand
-        angle={toAngle(currentMinute, 60)}
-        length={(radius * 1) / 3}
-        className="z-10"
-      />
-
-      {/* Hour */}
-      <Hand
-        angle={toAngle(currentHour, 12)}
-        length={(radius * 1) / 2}
-        className="z-10"
-      />
-
-      {/* Icon */}
-      <span className="absolute top-1/4">aeidetic</span>
-
+    <>
       {iterMap.map((_, i) => {
         if (i % 5 === 0) {
           const fontSize = 30;
@@ -160,6 +125,7 @@ export function Clock() {
           const dy = Math.sin((Math.PI / 180) * (angle + 90)) * (radius / 10);
           const x = r * Math.sin((i / 60) * Math.PI * 2) + r + dx;
           const y = r * Math.cos((i / 60) * Math.PI * 2) + r + dy;
+          const number = 12 - ((i / 5 + 6) % 12);
           return (
             <span
               key={i}
@@ -171,7 +137,7 @@ export function Clock() {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              {12 - ((i / 5 + 6) % 12)}
+              {number}
             </span>
           );
         } else {
@@ -190,6 +156,49 @@ export function Clock() {
           );
         }
       })}
+    </>
+  );
+}
+
+export function Clock() {
+  const { currentHour, currentMinute, currentSecond, radius } = useClock();
+  const toAngle = (v: number, max: number) => (v / max) * 360;
+  return (
+    <Flex
+      className={`relative outline-gray-300 bg-red-300 rounded-full`}
+      style={{
+        width: radius * 2,
+        outlineWidth: 16,
+        outlineStyle: "solid",
+        height: radius * 2,
+      }}
+      align="center"
+      justify="center"
+    >
+      {/* Center dot */}
+      <Flex className={`size-2 bg-white rounded-full absolute z-20`} />
+      {/* Second */}
+      <Hand
+        angle={toAngle(currentSecond, 60)}
+        length={radius}
+        className="z-10"
+      />
+      {/* Minute */}
+      <Hand
+        angle={toAngle(currentMinute, 60)}
+        length={(radius * 1) / 3}
+        className="z-10"
+      />
+      {/* Hour */}
+      <Hand
+        angle={toAngle(currentHour, 12)}
+        length={(radius * 1) / 2}
+        className="z-10"
+      />
+      {/* Icon */}
+      <span className="absolute top-1/4">aeidetic</span>
+
+      <Contour />
     </Flex>
   );
 }

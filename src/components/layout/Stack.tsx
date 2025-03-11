@@ -10,6 +10,7 @@ export interface StackProps extends ComponentProps<"div"> {
   spacing?: number | string;
   direction?: "row" | "column";
 }
+
 export const Stack: React.FC<StackProps> = ({
   children,
   spacing = 4,

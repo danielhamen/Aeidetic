@@ -1,5 +1,5 @@
-import { ServicePermission } from "./../ServicePermission.ts";
-import { ServiceNode } from "./../ServiceNode.ts";
+import { ServicePermission } from "./../ServicePermission";
+import { ServiceNode } from "./../ServiceNode";
 
 /**
  * ServiceNode responsible for reading and manipulating date and time information.

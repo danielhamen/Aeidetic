@@ -12,6 +12,9 @@ export enum ServicePermission {
   /** Allows deleting files from the Service Node's file system. */
   FILE_DELETE = "FILE:DELETE",
 
+  /** Allows executing files from the Service Node's file system. */
+  FILE_EXECUTE = "FILE:EXECUTE",
+
   /** Allows accessing the network from the Service Node. */
   NETWORK_ACCESS = "NETWORK:ACCESS",
 
