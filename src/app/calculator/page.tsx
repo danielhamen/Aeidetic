@@ -23,7 +23,8 @@ export default function Page() {
       <EnumAttribute
         value={value}
         setValue={setValue}
-        disabled={false}
+        disabled={true}
+        readOnly={false}
         items={enumOptions}
       />
     </Flex>
