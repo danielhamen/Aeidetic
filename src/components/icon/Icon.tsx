@@ -47,7 +47,7 @@ export const IconList: Record<IconTypes.Key, IconTypes.Value> = {
 } as const;
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
-  name: keyof typeof IconList;
+  name: keyof typeof IconList | string;
   size?: number;
   color?: string;
   weight?: IconTypes.Weight;
@@ -78,7 +78,7 @@ export function Icon({
       }}
       className={`material-symbols-rounded text-${color} ${props.className || ""}`}
     >
-      {IconList[name].name}
+      {Object.keys(IconList).includes(name) ? IconList[name].name : name}
     </span>
   );
 }
