@@ -14,11 +14,6 @@ export interface AttributeProps<T> {
   setValue: (value: T) => void;
   disabled?: boolean;
   readOnly?: boolean;
-  isValidInput?: (v: T) => boolean;
-}
-
-export function BaseInput() {
-  return <input />;
 }
 
 /**

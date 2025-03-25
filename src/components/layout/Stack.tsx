@@ -18,7 +18,10 @@ export const Stack: React.FC<StackProps> = ({
   ...props
 }) => {
   return (
-    <View className={`flex flex-${direction} gap-${spacing}`} {...props}>
+    <View
+      className={`flex flex-${direction === "row" ? "row" : "col"} gap-${spacing}`}
+      {...props}
+    >
       {children}
     </View>
   );

@@ -1,9 +1,12 @@
 import React from "react";
-import { Paragraph, Code, Title, Fancy, Heading } from "./__font";
+import { FontRegistry } from "./__font";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`h-full w-full p-0 m-0 grow`}>
+    <html
+      lang="en"
+      className={`h-full w-full p-0 m-0 grow ${FontRegistry.regular.variable}`}
+    >
       <head>
         <link
           rel="stylesheet"
@@ -13,9 +16,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         {/* Include Tailwind via CDN */}
         <script src="https://cdn.tailwindcss.com"></script>
       </head>
-      <body
-        className={`${Paragraph.variable} ${Code.variable} ${Title.variable} ${Fancy.variable} ${Heading.variable} antialiased flex flex-col h-full w-full p-0 m-0 grow`}
-      >
+      <body className={`antialiased flex flex-col h-full w-full p-0 m-0 grow`}>
         {children}
       </body>
     </html>

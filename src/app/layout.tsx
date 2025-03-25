@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Layout from "./layout/__layout";
-import Root from "./layout/__root";
+import Layout from "./__layout/__layout";
+import Root from "./__layout/__root";
 
 export const metadata: Metadata = {
   title: "Home • Aeidetic.com",

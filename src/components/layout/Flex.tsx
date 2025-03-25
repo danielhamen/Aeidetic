@@ -8,6 +8,7 @@ export interface FlexProps extends ComponentProps<"div"> {
   align?: "start" | "center" | "end" | "stretch";
   wrap?: boolean;
   grow?: number | boolean;
+  spacing?: number;
   gap?: number;
 }
 
@@ -27,23 +28,14 @@ export function Flex({
   align = "stretch",
   grow = undefined,
   wrap = false,
-  gap = 0,
+  spacing,
+  gap,
   ...props
 }: FlexProps) {
   return (
     <View
       {...props}
-      style={{
-        display: "flex",
-        flexDirection: direction === "row" ? "row" : "column",
-        flexGrow:
-          typeof grow === "number" ? grow : grow === undefined ? undefined : 1,
-        flexWrap: wrap ? "wrap" : "nowrap",
-        justifyContent: justify,
-        alignItems: align,
-        gap: gap,
-        ...props.style,
-      }}
+      className={`flex flex-${direction === "row" ? "row" : "col"} ${typeof grow === "number" ? grow : grow === undefined ? "" : "grow"} flex-${wrap ? "wrap" : "nowrap"} justify-${justify} items-${align} gap-${gap ?? spacing ?? 0} ${props.className || ""}`}
     >
       {children}
     </View>

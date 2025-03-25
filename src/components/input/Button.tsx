@@ -1,48 +1,45 @@
+"use client";
 import React, { ReactNode } from "react";
+import { Button as CoreButton } from "./../core/Button";
+import { AttributeWidth, WidthProvider } from "../attributes/CustomAttribute";
+import { Text } from "../display/Text";
 
 export type ButtonStyle = "primary" | "outline" | "link";
-export type ButtonWidth = "full" | "fit" | number | string;
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   textContent?: string;
   children?: ReactNode;
   disabled?: boolean;
   buttonStyle?: ButtonStyle;
-  foregroundColor?: string;
-  backgroundColor?: string;
   textAlign?: "left" | "center" | "right";
-  width?: ButtonWidth;
+  width?: AttributeWidth;
 }
 
 export function Button({
   children,
   disabled,
-  backgroundColor,
-  foregroundColor,
   buttonStyle,
   textContent,
   textAlign,
-  width = "full",
+  width = "fit",
+  ...props
 }: ButtonProps) {
   return (
-    <button
-      className={`bg-${backgroundColor} fg-${foregroundColor} border border-gray-300`}
-      style={{
-        width: (
-          {
-            full: "100%",
-            fit: "fit-content",
-            number: `${width}px`,
-            string: width,
-          } as { [key: ButtonWidth]: string }
-        )[width],
-        cursor: disabled ? "not-allowed" : "pointer",
-      }}
-    >
-      {children}
-      {textContent && (
-        <span className={`text-${textAlign}`}>{textContent}</span>
-      )}
-    </button>
+    <WidthProvider width={width}>
+      <CoreButton
+        {...props}
+        className={`bg-blue-500 text-white border-none transition-all duration-100 outline-0 outline-blue-200 active:outline-4 p-2 px-4 rounded-lg ${props.className || ""}`}
+        style={{
+          cursor: disabled ? "not-allowed" : "pointer",
+          ...props.style,
+        }}
+      >
+        {children}
+        {textContent && (
+          <Text className={`text-${textAlign}`}>{textContent}</Text>
+        )}
+      </CoreButton>
+    </WidthProvider>
   );
 }

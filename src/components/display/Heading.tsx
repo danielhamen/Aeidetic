@@ -4,10 +4,16 @@ import { IntegerRange } from "api/lib/types/IntegerRange";
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children?: ReactNode;
   level?: IntegerRange<1, 7>;
+  overrideHtmlElementLevel?: IntegerRange<1, 7>;
 }
 
-export function Heading({ children, level = 1, ...props }: HeadingProps) {
-  const Tag = `h${level}`;
+export function Heading({
+  children,
+  level = 1,
+  overrideHtmlElementLevel,
+  ...props
+}: HeadingProps) {
+  const Tag = `h${overrideHtmlElementLevel ?? level}`;
   return <Tag {...props}>{children}</Tag>;
 }
 
