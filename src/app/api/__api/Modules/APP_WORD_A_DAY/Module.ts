@@ -12,13 +12,16 @@ import { Middleware as EndpointMiddleware } from "../../Types/Middleware";
 
 export interface Word {
   id: number;
-  word: string;
+  lexeme: string;
   definition: string;
   example: string;
+  ipa?: string;
+  pronunciation?: string;
   etymology: string;
   partOfSpeech: string;
   synonyms: string[];
   antonyms: string[];
+  date: `${string}-${string}-${string}`;
   related: string[];
   translations: {
     de: string[];
@@ -33,16 +36,16 @@ export interface IWordManager {
   endDate: Date;
   getWordByDate(date: Date): Word | undefined;
   getWordsByRange(startDate: Date, endDate: Date): Word[] | undefined;
-  getWords(): Word[];
+  getWords(): Record<string, Word>;
   getWordById(id: number): Word | undefined;
   loadDefaults(): Promise<void>;
 }
 
 export class WordManager implements IWordManager {
-  private words: Word[];
+  private words: Record<string, Word>;
 
   constructor() {
-    this.words = [];
+    this.words = {};
   }
 
   get startDate(): Date {
@@ -82,14 +85,28 @@ export class WordManager implements IWordManager {
     return words;
   }
 
-  getWordByDate(date: Date, clamp: boolean = false): Word | undefined {
-    const deltaDays = Math.floor(
-      (date.getTime() - this.startDate.getTime()) / (1000 * 60 * 60 * 24),
-    );
+  getWordByDate(date: Date): Word | undefined {
+    return Object.values(this.words)
+      .sort((a, b) => {
+        const ad = parseDate(a.date);
+        const bd = parseDate(b.date);
+        if (!ad || !bd) {
+          console.error("Invalid entry for ", a.lexeme, b.lexeme);
+          return 0;
+        }
 
-    return this.getWordById(
-      this.getWordIds()[deltaDays % (clamp ? this.words.length : 1)],
-    );
+        return ad.getTime() - bd.getTime();
+      })
+      .find((w) => {
+        console.log(
+          w.date,
+          `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
+        );
+        return (
+          w.date ===
+          `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}`
+        );
+      });
   }
 
   getWordIds(): number[] {
@@ -114,7 +131,6 @@ export class WordManager implements IWordManager {
             delete words[key];
           }
         });
-        console.log("\n\n", words, "\n\n");
         this.words = words;
         return this.words;
       });
@@ -122,7 +138,7 @@ export class WordManager implements IWordManager {
     this.words = wordList;
   }
 
-  getWords(): Word[] {
+  getWords(): Record<string, Word> {
     return this.words;
   }
 
@@ -133,7 +149,10 @@ export class WordManager implements IWordManager {
       definition: word?.definition,
       example: word?.example,
       etymology: word?.etymology,
+      pronunciation: word?.pronunciation,
+      ipa: word?.ipa,
       partOfSpeech: word?.partOfSpeech,
+      date: word?.date,
       synonyms: word?.synonyms,
       antonyms: word?.antonyms,
       related: word?.related,
@@ -145,8 +164,6 @@ export class WordManager implements IWordManager {
       },
     };
 
-    if (Object.values(wordRecord).some((v) => v === undefined))
-      return undefined;
     return wordRecord;
   }
 }
@@ -191,6 +208,8 @@ const Middleware: Record<string, EndpointMiddleware> = {
             return true;
           }
           break;
+        case "getstartdate":
+          return true;
         case null:
           return true;
       }
@@ -219,7 +238,7 @@ const mod: Module = {
           const wm = new WordManager();
           await wm.loadDefaults();
 
-          type SearchQuery = "date" | "range" | null;
+          type SearchQuery = "date" | "range" | "getstartdate" | null;
           const searchQuery = url.searchParams.get("query") as SearchQuery;
 
           const getResponse = () => {
@@ -249,21 +268,27 @@ const mod: Module = {
                 }
 
                 return words;
+              case "getstartdate":
+                return {
+                  year: wm.startDate.getFullYear(),
+                  month: wm.startDate.getMonth() + 1,
+                  day: wm.startDate.getDate(),
+                };
               default:
-                const _word = wm.getWordByDate(new Date());
-                if (!_word) {
-                  blockRequest("DateOutOfRange");
+                const _words = wm.getWords();
+                if (!_words || Object.keys(_words).length === 0) {
+                  blockRequest("WordsNotFound");
                   setStatus(400);
                   return;
                 }
 
-                return _word;
+                return _words;
             }
           };
 
           const response = getResponse();
           if (!response) {
-            blockRequest("Test");
+            // blockRequest("Test");
             setStatus(400);
             return;
           }

@@ -1,13 +1,12 @@
 "use client";
-import { Flex } from "api/components/layout/Flex";
-import { Button } from "api/components/input/Button";
-import { TextAttribute } from "api/components/attributes/TextAttribute";
+import {
+  Flex,
+  Button,
+  EmailAttribute,
+  Divider,
+  PasswordAttribute,
+} from "api/components/web/index";
 import { useState } from "react";
-import { Stack } from "api/components/layout/Stack";
-import { Icon } from "api/components/icon/Icon";
-import { EmailAttribute } from "api/components/attributes/EmailAttribute";
-import { Divider } from "api/components/layout/Divider";
-import { PasswordAttribute } from "api/components/attributes/PasswordAttribute";
 
 export default function Home() {
   const [value, setValue] = useState("");

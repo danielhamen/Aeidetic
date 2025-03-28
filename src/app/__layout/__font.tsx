@@ -4,6 +4,7 @@ import {
   Baskervville_SC,
   Quicksand,
   Monsieur_La_Doulaise,
+  Urbanist,
 } from "next/font/google";
 
 export const Code = Geist_Mono({
@@ -66,10 +67,10 @@ export const Cursive = Monsieur_La_Doulaise({
   weight: ["400"],
 });
 
-export const Regular = Quicksand({
+export const Regular = Urbanist({
   variable: "--font",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const Mono = Geist_Mono({
