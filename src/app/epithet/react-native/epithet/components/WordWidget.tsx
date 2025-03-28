@@ -51,6 +51,7 @@ export function WordProvider({ children }: { children: ReactNode }) {
   }
 
   // Fetch words from an API or a local data source
+  // Test
   const fetchWords = useCallback(async () => {
     const res = await fetch("http://127.0.0.1:3000/api/WORD_A_DAY/data", {
       method: "GET",
