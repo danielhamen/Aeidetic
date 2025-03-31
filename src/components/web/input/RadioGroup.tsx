@@ -1,5 +1,5 @@
-import React from "react";
+export interface RadioGroupProps {
+  0: undefined;
+}
 
-export interface RadioGroupProps {}
-
-export function RadioGroup({ ...props }: RadioGroupProps) {}
+export function RadioGroup({}: RadioGroupProps) {}

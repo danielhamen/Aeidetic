@@ -10,18 +10,33 @@ export type Axis3D = "x" | "y" | "z";
 export type Vector2D<A, B> = [A, B];
 export type Vector3D<A, B, C> = [A, B, C];
 
+// --- Types for MathQuill component ---
+
+interface MathFieldInstance {
+  el: () => HTMLElement;
+  latex: () => string;
+}
+
+interface EditableMathFieldProps {
+  // Allow null/undefined so that our type matches react-mathquill's propTypes.
+  latex: string | null | undefined;
+  mathquillDidMount: (mathField: MathFieldInstance) => void;
+  onChange: (mathField: MathFieldInstance) => void;
+}
+
+type EditableMathFieldComponent = React.ComponentType<EditableMathFieldProps>;
+
 // Lazy-load MathQuill's EditableMathField component
-const MathQuillLoader = async () => {
+const MathQuillLoader = async (): Promise<EditableMathFieldComponent> => {
   const { EditableMathField } = await import("react-mathquill");
-  return EditableMathField;
+  return EditableMathField as EditableMathFieldComponent;
 };
 
 export function MathInput() {
-  const [latex, setLatex] = useState("\\frac{1}{\\sqrt{2}}\\cdot 2");
-  const [MathFieldComponent, setMathFieldComponent] = useState<any>(null);
-  const mathFieldRef = useRef<any>(null);
-  // A simple buffer to keep track of typed letters
-  const inputBufferRef = useRef("");
+  const [latex, setLatex] = useState<string>("\\frac{1}{\\sqrt{2}}\\cdot 2");
+  const [MathFieldComponent, setMathFieldComponent] =
+    useState<EditableMathFieldComponent | null>(null);
+  const mathFieldRef = useRef<MathFieldInstance | null>(null);
 
   useEffect(() => {
     MathQuillLoader().then((EditableMathField) => {
@@ -29,14 +44,12 @@ export function MathInput() {
     });
   }, []);
 
-  // Attach a keydown listener once MathFieldComponent is loaded and mounted.
   useEffect(() => {
     if (mathFieldRef.current) {
-      // Get the underlying DOM element from MathQuill.
       const mqEl = mathFieldRef.current.el();
-
-      const handleKeyDown = (e: KeyboardEvent) => {};
-
+      const handleKeyDown = () => {
+        // keydown handler logic (if needed)
+      };
       mqEl.addEventListener("keydown", handleKeyDown);
       return () => mqEl.removeEventListener("keydown", handleKeyDown);
     }
@@ -49,11 +62,10 @@ export function MathInput() {
   return (
     <MathFieldComponent
       latex={latex}
-      mathquillDidMount={(mathField: any) => {
-        // Store the MathQuill instance in a ref.
+      mathquillDidMount={(mathField: MathFieldInstance) => {
         mathFieldRef.current = mathField;
       }}
-      onChange={(mathField: any) => {
+      onChange={(mathField: MathFieldInstance) => {
         setLatex(mathField.latex());
       }}
     />
@@ -77,15 +89,15 @@ export interface ChartProps {
   plane?: ReactNode;
 }
 
-export function Chart({ title, plane, width = 600, height = 600 }: ChartProps) {
+export function Chart({ title, plane, width, height }: ChartProps) {
   return (
     <Flex
-      className={`relative p-0 bg-white border border-black m-auto`}
-      style={{ width: width, height: height }}
+      className="relative p-0 bg-white border border-black m-auto"
+      style={{ width, height }}
     >
       {title ? (
         <Flex
-          className={`absolute top-4 left-0 w-full`}
+          className="absolute top-4 left-0 w-full"
           direction="row"
           justify="center"
         >
@@ -113,40 +125,30 @@ export interface PlottedStyle {
   style?: "dashed" | "dotted" | "solid";
 }
 
-/**
- * Displays single point on graph
- */
+/** Displays single point on graph */
 export interface Point extends PlottedStyle {
   x: number;
   y: number;
 }
 
-/**
- * Displays a function independent of x (e.g. y=sin(x))
- */
+/** Displays a function independent of x (e.g. y=sin(x)) */
 export interface FunctionY extends PlottedStyle {
   y: (x: number) => number;
 }
 
-/**
- * Displays a function independent of y (e.g. x=cos(y))
- */
+/** Displays a function independent of y (e.g. x=cos(y)) */
 export interface FunctionX extends PlottedStyle {
   x: (y: number) => number;
 }
 
-/**
- * Displays a vector field
- */
+/** Displays a vector field */
 export interface VectorField extends PlottedStyle {
   v: (x: number, y: number) => Vector2D<number, number>;
   /** Distance between vectors */
   step?: number;
 }
 
-/**
- * Creates a shape based on a recursive algorithm
- */
+/** Creates a shape based on a recursive algorithm */
 export interface RecursiveFunction extends PlottedStyle {
   x0: number;
   y0: number;
@@ -169,9 +171,6 @@ export interface CartesianProps extends ChartProps {
 /**
  * The Cartesian component sets up a WebGL2 context on a canvas,
  * draws a Cartesian plane (axes) and then plots each item in `data`.
- * The pan offset is incorporated into the transformation matrix so that
- * as you change the offset (via mouse panning) the view shifts accordingly.
- * Additionally, the component now supports a "style" property on PlottedStyle.
  */
 export function Cartesian({ data, ...props }: CartesianProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -181,22 +180,21 @@ export function Cartesian({ data, ...props }: CartesianProps) {
   const [anchor] = useState<Vector2D<number, number>>([0, 0]);
   // pixels per Cartesian unit
   const [scale, setScale] = useState<Vector2D<number, number>>([24, 24]);
-  // additional pan offset in pixels (will be converted to Cartesian units)
+  // additional pan offset in pixels
   const [offset, setOffset] = useState<Vector2D<number, number>>([30, 60]);
   // device pixel ratio
   const [devicePixelRatio] = useState<number>(2);
-  const [t0] = useState<number>(time);
 
   // --- Helper: simple hex color parser ---
   function parseColor(
-    color?: string,
+    color: string | undefined,
     opacity = 1,
   ): [number, number, number, number] {
     if (!color) {
       return [1, 1, 1, opacity];
     }
     if (color.startsWith("#") && (color.length === 7 || color.length === 4)) {
-      let r, g, b;
+      let r: number, g: number, b: number;
       if (color.length === 7) {
         r = parseInt(color.substring(1, 3), 16);
         g = parseInt(color.substring(3, 5), 16);
@@ -212,18 +210,24 @@ export function Cartesian({ data, ...props }: CartesianProps) {
   }
 
   useEffect(() => {
-    if (!canvasRef.current) return setError("Canvas element not found");
-    if (!data) return setError("No data provided");
+    if (!canvasRef.current) {
+      setError("Canvas element not found");
+      return;
+    }
+    if (!data) {
+      setError("No data provided");
+      return;
+    }
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return setError("2D context not supported");
+    if (!ctx) {
+      setError("2D context not supported");
+      return;
+    }
 
-    // Get display dimensions from props
     const displayWidth = props.width;
     const displayHeight = props.height;
-
-    // Width & height of the canvas element in pixels
     const rasterizedWidth = displayWidth * devicePixelRatio;
     const rasterizedHeight = displayHeight * devicePixelRatio;
 
@@ -234,20 +238,17 @@ export function Cartesian({ data, ...props }: CartesianProps) {
     canvas.style.height = displayHeight + "px";
     ctx.scale(devicePixelRatio, devicePixelRatio);
 
-    // Compute the effective view center (in Cartesian coordinates).
-    // Convert the pan offset (in pixels) to Cartesian units.
+    // Compute effective view center (in Cartesian coordinates).
     const effectiveAnchorX = anchor[0] + offset[0] / scale[0];
     const effectiveAnchorY = anchor[1] - offset[1] / scale[1];
 
     // Helper: convert a Cartesian (x,y) to canvas coordinates.
-    // We want the center of the canvas to represent the effective anchor.
     function toCanvas(x: number, y: number) {
       const cx = displayWidth / 2 + (x - effectiveAnchorX) * scale[0];
       const cy = displayHeight / 2 - (y - effectiveAnchorY) * scale[1];
       return { cx, cy };
     }
 
-    // Compute visible bounds in Cartesian coordinates.
     const visibleWidth = displayWidth / scale[0];
     const visibleHeight = displayHeight / scale[1];
     const minX = effectiveAnchorX - visibleWidth / 2;
@@ -258,9 +259,8 @@ export function Cartesian({ data, ...props }: CartesianProps) {
     // --- Draw Axes ---
     ctx.lineWidth = 1;
     ctx.strokeStyle = "rgb(128,128,128)";
-    ctx.setLineDash([]); // solid lines
+    ctx.setLineDash([]);
 
-    // Draw X-axis (if y=0 is visible).
     if (0 >= minY && 0 <= maxY) {
       const start = toCanvas(minX, 0);
       const end = toCanvas(maxX, 0);
@@ -269,7 +269,6 @@ export function Cartesian({ data, ...props }: CartesianProps) {
       ctx.lineTo(end.cx, end.cy);
       ctx.stroke();
     }
-    // Draw Y-axis (if x=0 is visible).
     if (0 >= minX && 0 <= maxX) {
       const start = toCanvas(0, minY);
       const end = toCanvas(0, maxY);
@@ -279,23 +278,21 @@ export function Cartesian({ data, ...props }: CartesianProps) {
       ctx.stroke();
     }
 
-    // --- Draw grid ---
-
-    // Helper to set style for a given plottable.
+    // --- Draw Plottables ---
     const applyStyle = (d: PlottedStyle) => {
-      d.color ??=
-        Object.values(Colors)[
-          Math.floor(Math.random() * Object.values(Colors).length)
-        ];
-      d.width ??= 1;
-      d.opacity ??= 1;
-      d.style ??= "solid";
-      const [r, g, b, a] = parseColor(d.color, d.opacity ?? 1);
+      if (!d.color) {
+        const colorValues = Object.values(Colors);
+        d.color = colorValues[Math.floor(Math.random() * colorValues.length)];
+      }
+      if (d.width === undefined) d.width = 1;
+      if (d.opacity === undefined) d.opacity = 1;
+      if (!d.style) d.style = "solid";
+      const [r, g, b, a] = parseColor(d.color, d.opacity);
       ctx.strokeStyle = `rgba(${Math.round(r * 255)}, ${Math.round(
         g * 255,
       )}, ${Math.round(b * 255)}, ${a})`;
       ctx.fillStyle = ctx.strokeStyle;
-      ctx.lineWidth = d.width ?? 1;
+      ctx.lineWidth = d.width;
       if (d.style === "dashed") {
         ctx.setLineDash([10, 5]);
       } else if (d.style === "dotted") {
@@ -305,12 +302,11 @@ export function Cartesian({ data, ...props }: CartesianProps) {
       }
     };
 
-    // --- Plot each plottable ---
     data.forEach((d) => {
-      // FunctionY: sample along x and compute y = d.y(x)
+      // FunctionY: sample along x.
       if (typeof (d as FunctionY).y === "function") {
         const func = d as FunctionY;
-        const sampleCount = displayWidth; // one sample per pixel
+        const sampleCount = displayWidth;
         ctx.beginPath();
         for (let i = 0; i < sampleCount; i++) {
           const t = i / (sampleCount - 1);
@@ -323,10 +319,10 @@ export function Cartesian({ data, ...props }: CartesianProps) {
         applyStyle(d);
         ctx.stroke();
       }
-      // FunctionX: sample along y and compute x = d.x(y)
+      // FunctionX: sample along y.
       else if (typeof (d as FunctionX).x === "function") {
         const func = d as FunctionX;
-        const sampleCount = displayHeight; // one sample per pixel
+        const sampleCount = displayHeight;
         ctx.beginPath();
         for (let i = 0; i < sampleCount; i++) {
           const t = i / (sampleCount - 1);
@@ -339,7 +335,7 @@ export function Cartesian({ data, ...props }: CartesianProps) {
         applyStyle(d);
         ctx.stroke();
       }
-      // Point: has numeric x and y.
+      // Point.
       else if (
         typeof (d as Point).x === "number" &&
         typeof (d as Point).y === "number"
@@ -348,12 +344,11 @@ export function Cartesian({ data, ...props }: CartesianProps) {
         const { cx, cy } = toCanvas(pt.x, pt.y);
         applyStyle(d);
         ctx.beginPath();
-        // Draw a filled circle.
         const radius = d.width ? d.width / 2 : 2.5;
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fill();
       }
-      // VectorField: sample a grid and draw each vector as a line.
+      // VectorField.
       else if ((d as VectorField).v) {
         const vf = d as VectorField;
         const step = vf.step ?? 4;
@@ -370,7 +365,7 @@ export function Cartesian({ data, ...props }: CartesianProps) {
           }
         }
       }
-      // RecursiveFunction: create a shape via recursion.
+      // RecursiveFunction.
       else if (
         typeof (d as RecursiveFunction).x0 === "number" &&
         typeof (d as RecursiveFunction).y0 === "number" &&
@@ -396,28 +391,25 @@ export function Cartesian({ data, ...props }: CartesianProps) {
         ctx.stroke();
       }
     });
-  }, [data, anchor, scale, offset, props.width, props.height, time]);
+  }, [
+    data,
+    anchor,
+    scale,
+    offset,
+    props.width,
+    props.height,
+    time,
+    devicePixelRatio,
+  ]);
 
   // --- Pan handling ---
   function handleMouseDown(e: React.MouseEvent<HTMLCanvasElement>) {
-    let x = e.clientX;
-    let y = e.clientY;
-    const mouseUp = (_e: MouseEvent) => {
+    const mouseUp = () => {
       window.removeEventListener("mousemove", mouseMove);
       window.removeEventListener("mouseup", mouseUp);
-      _e.preventDefault();
-      _e.stopPropagation();
     };
-    const mouseMove = (_e: MouseEvent) => {
-      // const dx = x - _e.clientX;
-      console.log("Hey", offset[0]);
-      // const dy = y - _e.clientY;
+    const mouseMove = () => {
       setOffset([offset[0] + 1, offset[1]]);
-      // setOffset([offset[0] - dx, offset[1] + dy]);
-      // x = _e.clientX;
-      // y = _e.clientY;
-      // _e.preventDefault();
-      // _e.stopPropagation();
     };
     window.addEventListener("mousemove", mouseMove);
     window.addEventListener("mouseup", mouseUp);

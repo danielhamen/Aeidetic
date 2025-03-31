@@ -11,7 +11,6 @@ export interface DarkModeSwitchProps {
 export function DarkModeSwitch({
   isDarkMode,
   setDarkMode,
-  showLabels = true,
 }: DarkModeSwitchProps) {
   return (
     // Container

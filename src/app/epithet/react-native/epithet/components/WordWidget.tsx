@@ -6,14 +6,13 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { Word } from "../../../../api/__api/Modules/APP_WORD_A_DAY/Module";
 
 export interface WordManager {
   data: Record<number, Word>;
   setData: (d: Record<number, Word>) => void;
-  getOffsetByDate: (d: Date) => number;
-  getWordByDate: (d: Date) => Word;
+  getWordByDate: (d: Date) => Word | undefined;
   fetchWords: () => Promise<void>;
 }
 
@@ -22,10 +21,31 @@ const WordContext = createContext<WordManager | null>(null);
 
 // WordProvider component
 export function WordProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<Word[] | null>(null);
+  const [data, setData] = useState<Record<number, Word>>({});
   const [startDate, setStartDate] = useState<Date | null>(null);
 
-  function parseWord(word: any): Word | undefined {
+  function isWordLike(obj: unknown): obj is Word {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      "lexeme" in obj &&
+      "id" in obj &&
+      "definition" in obj &&
+      "example" in obj &&
+      "etymology" in obj &&
+      "pronunciation" in obj &&
+      "date" in obj &&
+      "ipa" in obj &&
+      "partOfSpeech" in obj &&
+      "synonyms" in obj &&
+      "antonyms" in obj &&
+      "related" in obj &&
+      "translations" in obj
+    );
+  }
+
+  const parseWord = useCallback((word: unknown): Word | undefined => {
+    if (!isWordLike(word)) return undefined;
     const wordRecord: Word = {
       lexeme: word?.lexeme,
       id: word?.id,
@@ -48,15 +68,11 @@ export function WordProvider({ children }: { children: ReactNode }) {
     };
 
     return wordRecord;
-  }
+  }, []);
 
   // Fetch words from an API or a local data source
-  // //Test
   const fetchWords = useCallback(async () => {
-    const res = await fetch("http://127.0.0.1:3000/api/WORD_A_DAY/data", {
-      method: "GET",
-      mode: "no-cors", // This bypasses the CORS policy
-    });
+    const res = await fetch("http://127.0.0.1:3000/api/WORD_A_DAY/data");
     if (!res.ok) {
       throw new Error("NetworkError");
     }
@@ -67,12 +83,12 @@ export function WordProvider({ children }: { children: ReactNode }) {
       .filter((w) => w !== undefined);
 
     setData(wordMap);
-  }, []);
+  }, [parseWord]);
 
   const getWordByDate = useCallback(
     (date: Date): Word | undefined => {
       return (
-        data?.find(
+        Object.values(data)?.find(
           (value) =>
             value.date ===
             `${date.getFullYear()}-${date.getMonth().toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}`,
@@ -81,8 +97,6 @@ export function WordProvider({ children }: { children: ReactNode }) {
     },
     [data],
   );
-
-  const getOffsetByDate = useCallback(() => {}, []);
 
   async function getStartDate(): Promise<Date> {
     const req = await fetch(
@@ -140,7 +154,6 @@ export function WordProvider({ children }: { children: ReactNode }) {
     data,
     setData,
     startDate,
-    getOffsetByDate,
     getWordByDate,
     fetchWords,
   };
@@ -179,11 +192,11 @@ export function DateOverlay({ date }: { date?: string }) {
 }
 
 export function Title({ text }: { text: string }) {
-  return <Text style={styles.title}>{text}</Text>;
+  return <Text style={styles.title as TextStyle}>{text}</Text>;
 }
 
 export function Divider() {
-  return <View style={styles.divider}></View>;
+  return <View style={styles.divider as ViewStyle}></View>;
 }
 
 export interface WordWidgetProps {
@@ -205,39 +218,39 @@ export function WordWidget({ word }: WordWidgetProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container as ViewStyle}>
       <DateOverlay date={dateString ?? undefined} />
       <View>
-        <Text style={styles.lexeme}>« {word.lexeme} »</Text>
+        <Text style={styles.lexeme as TextStyle}>« {word.lexeme} »</Text>
         <Text>{word.ipa}</Text>
-        <Text style={styles.definition}>
+        <Text style={styles.definition as TextStyle}>
           ({word.partOfSpeech}): {word.definition}
         </Text>
-        <Text style={styles.example}>{word.example}</Text>
+        <Text style={styles.example as TextStyle}>{word.example}</Text>
       </View>
       <Divider />
       <View style={{ width: "100%", gap: 12 }}>
-        <View style={styles.widget}>
+        <View style={styles.widget as ViewStyle}>
           <Title text="Etymology" />
           <Text>{word.etymology}</Text>
         </View>
         <View
           style={{ flexDirection: "row", flexGrow: 1, width: "100%", gap: 12 }}
         >
-          <View style={[styles.widget, { flex: 0.5 }]}>
+          <View style={[styles.widget as ViewStyle, { flex: 0.5 }]}>
             <Title text="Synonyms" />
             <Text>{word.synonyms.join(", ")}</Text>
           </View>
-          <View style={[styles.widget, { flex: 0.5 }]}>
+          <View style={[styles.widget as ViewStyle, { flex: 0.5 }]}>
             <Title text="Antonyms" />
             <Text>{word.antonyms.join(", ")}</Text>
           </View>
         </View>
-        <View style={styles.widget}>
+        <View style={styles.widget as ViewStyle}>
           <Title text="Related Words" />
           <Text>{word.related.join(", ")}</Text>
         </View>
-        <View style={styles.widget}>
+        <View style={styles.widget as ViewStyle}>
           <Title text="Translations" />
           <Text>{Object.values(word.translations).join(", ")}</Text>
         </View>
@@ -254,7 +267,10 @@ export function HorizontalWordFeed({
   setDate: (d: Date) => void;
 }) {
   const [data, setData] = useState<[Word, Date][] | null>(null);
-  useEffect(() => {}, [date]);
+  useEffect(() => {
+    setDate(new Date());
+    setData([]);
+  }, [date, setDate]);
 
   if (!data) {
     return null;
@@ -264,7 +280,7 @@ export function HorizontalWordFeed({
 }
 
 const GRAY_200 = "#e5e7eb";
-const SHADOW = "rgba(0, 0, 0, 0.05)";
+// const SHADOW = "rgba(0, 0, 0, 0.05)";
 
 const styles = StyleSheet.create({
   container: {
@@ -312,7 +328,6 @@ const styles = StyleSheet.create({
     padding: 2,
     fontSize: 13,
     maxWidth: 400,
-    width: "calc(100% - 16px)",
     marginHorizontal: "auto",
     marginTop: 12,
     textAlign: "center",

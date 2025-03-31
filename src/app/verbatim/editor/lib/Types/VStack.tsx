@@ -1,4 +1,3 @@
-import { LayoutNode } from "./LayoutNode";
 import { VCursor } from "./VCursor";
 import { VNode } from "./VNode";
 

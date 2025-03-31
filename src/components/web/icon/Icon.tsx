@@ -1,31 +1,29 @@
-import { IntegerRange } from "./../../../types/IntegerRange";
+import { IntegerRange } from "./../../../lib/types/IntegerRange";
 import React from "react";
 
-export namespace IconTypes {
-  /** Represents the icon key */
-  export type Key = string;
-  export type Source = "MATERIAL_ICONS";
-  export type Value = { src: Source; name: string };
+/** Represents the icon key */
+export type IconKey = string;
+export type IconSource = "MATERIAL_ICONS";
+export type IconValue = { src: IconSource; name: string };
 
-  /** Represents the icon weight */
-  export type Weight =
-    | 100
-    | 200
-    | 300
-    | 400
-    | 500
-    | 600
-    | 700
-    | IntegerRange<100, 700>;
+/** Represents the icon weight */
+export type IconWeight =
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | IntegerRange<100, 700>;
 
-  /** Represents the icon grade */
-  export type Grade = IntegerRange<-25, 200>;
+/** Represents the icon grade */
+export type IconGrade = IntegerRange<-25, 200>;
 
-  /** Represents the icon optical size */
-  export type OpticalSize = IntegerRange<20, 48>;
-}
+/** Represents the icon optical size */
+export type IconOpticalSize = IntegerRange<20, 48>;
 
-export const IconList: Record<IconTypes.Key, IconTypes.Value> = {
+export const IconList: Record<IconKey, IconValue> = {
   DEFAULT: { src: "MATERIAL_ICONS", name: "disabled_by_default" },
   UNDO: { src: "MATERIAL_ICONS", name: "undo" },
   REDO: { src: "MATERIAL_ICONS", name: "redo" },
@@ -50,9 +48,9 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   name: keyof typeof IconList | string;
   size?: number;
   color?: string;
-  weight?: IconTypes.Weight;
-  grade?: IconTypes.Grade;
-  opticalSize?: IconTypes.OpticalSize;
+  weight?: IconWeight;
+  grade?: IconGrade;
+  opticalSize?: IconOpticalSize;
   fill?: boolean;
 }
 
@@ -60,10 +58,10 @@ export function Icon({
   name = "DEFAULT",
   size = 24,
   color = "black",
-  weight = 400,
-  grade = 0,
-  opticalSize = 24,
-  fill = false,
+  // weight = 400,
+  // grade = 0,
+  // opticalSize = 24,
+  // fill = false,
   ...props
 }: IconProps) {
   return (
@@ -72,8 +70,7 @@ export function Icon({
       style={{
         userSelect: "none",
         fontSize: size,
-        // @ts-ignore
-        fontVariationSettings: `'FILL' ${fill ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`,
+        // fontVariationSettings: `'FILL' ${fill ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`,
         ...props.style,
       }}
       className={`material-symbols-rounded text-${color} ${props.className || ""}`}

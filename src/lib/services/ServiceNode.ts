@@ -1,6 +1,6 @@
-import { ServicePermission } from "./ServicePermission.ts";
-import { ServicePermissionError } from "./../Errors/ServicePermissionError.ts";
-import { ServiceRegistry } from "./ServiceRegistry.ts";
+import { ServicePermission } from "./ServicePermission";
+import { ServicePermissionError } from "./../../errors/ServicePermissionError";
+import { ServiceRegistry } from "./ServiceRegistry";
 
 /**
  * Defines the structure of a ServiceNode, which represents an independent service

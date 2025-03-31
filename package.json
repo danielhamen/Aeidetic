@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "@mui/icons-material": "^7.0.1",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "fs": "^0.0.1-security",
     "i": "^0.3.7",
     "katex": "^0.16.21",
+    "material-symbols": "^0.29.2",
     "mathquill": "^0.10.1-a",
     "monaco-latex": "^0.0.1",
     "next": "15.2.1",

@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useContext,
   ReactNode,
+  useCallback,
 } from "react";
 import {
   Flex,
@@ -21,7 +22,7 @@ import {
 } from "api/components/web/index";
 import { Word } from "api/app/api/__api/Modules/APP_WORD_A_DAY/Module";
 
-export interface EpithetProps {
+interface EpithetProps {
   incrementToday: () => void;
   decrementToday: () => void;
   today: [Word, Date] | undefined;
@@ -29,9 +30,9 @@ export interface EpithetProps {
   getDate(date: Date): Promise<Word | undefined>;
 }
 
-export const EpithetContext = React.createContext<EpithetProps | null>(null);
+const EpithetContext = React.createContext<EpithetProps | null>(null);
 
-export function EpithetProvider({ children }: { children: React.ReactNode }) {
+function EpithetProvider({ children }: { children: React.ReactNode }) {
   const [today, setToday] = useState<[Word, Date] | undefined>(undefined);
 
   async function getDate(date: Date): Promise<Word | undefined> {
@@ -56,7 +57,7 @@ export function EpithetProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const incrementToday = () => {
+  const incrementToday = useCallback(() => {
     if (!today) return;
     const newDate = new Date(today[1].getTime() + 24 * 60 * 60 * 1000);
     getDate(newDate).then((w) => {
@@ -66,9 +67,9 @@ export function EpithetProvider({ children }: { children: React.ReactNode }) {
         setToday([w, newDate]);
       }
     });
-  };
+  }, [today]);
 
-  const decrementToday = () => {
+  const decrementToday = useCallback(() => {
     if (!today) return;
     const newDate = new Date(today[1].getTime() - 24 * 60 * 60 * 1000);
     getDate(newDate).then((w) => {
@@ -78,7 +79,7 @@ export function EpithetProvider({ children }: { children: React.ReactNode }) {
         setToday([w, newDate]);
       }
     });
-  };
+  }, [today]);
 
   useEffect(() => {
     const d = new Date();
@@ -101,7 +102,7 @@ export function EpithetProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useEpithet() {
+function useEpithet() {
   const context = useContext(EpithetContext);
   if (!context) {
     throw new Error("useEpithet must be used within an EpithetProvider");
@@ -109,7 +110,7 @@ export function useEpithet() {
   return context;
 }
 
-export interface WordWidgetProps {
+interface WordWidgetProps {
   title: string;
   children?: ReactNode;
   maxWidth?: number | string;
@@ -119,7 +120,7 @@ export interface WordWidgetProps {
   grow?: boolean;
 }
 
-export function WordWidget({
+function WordWidget({
   title,
   children,
   maxWidth,
@@ -140,7 +141,7 @@ export function WordWidget({
   );
 }
 
-export function DateOverlay({
+function DateOverlay({
   date,
   containerStyle,
 }: {
@@ -168,7 +169,7 @@ export function DateOverlay({
   );
 }
 
-export function DateNavigatorOverlay({}) {
+function DateNavigatorOverlay({}) {
   const { incrementToday, decrementToday } = useEpithet();
   const [iconStyle] = useState(`cursor-pointer p-4`);
 
@@ -196,7 +197,7 @@ export function DateNavigatorOverlay({}) {
   );
 }
 
-export function Overview({ word, date }: { word?: Word; date?: Date }) {
+function Overview({ word, date }: { word?: Word; date?: Date }) {
   if (!word) {
     return null;
   }
@@ -310,7 +311,7 @@ export function Overview({ word, date }: { word?: Word; date?: Date }) {
   );
 }
 
-export function EpithetHome() {
+function EpithetHome() {
   const { today } = useEpithet();
   if (!today) {
     return null;

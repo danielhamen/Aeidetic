@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { WidthProvider } from "./CustomAttribute";
 import { TextAttribute, TextAttributeProps } from "./TextAttribute";
 import { Icon } from "../icon/Icon";
 
-export interface EmailAttributeProps extends TextAttributeProps {}
+export interface EmailAttributeProps extends TextAttributeProps {
+  0?: undefined;
+}
 
 export function EmailAttribute({
   value,

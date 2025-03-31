@@ -1,7 +1,9 @@
 import React from "react";
 import { View } from "../core/View";
 
-export interface SpacerProps {}
+export interface SpacerProps {
+  0?: undefined;
+}
 
 /**
  * Spacer component that expands to fill available space.

@@ -1,4 +1,3 @@
-import { VStack } from "./VStack";
 import { Module } from "./../Module/Module";
 import { LayoutNode } from "./LayoutNode";
 import { VNode } from "./VNode";

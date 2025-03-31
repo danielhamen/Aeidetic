@@ -1,5 +1,5 @@
-import React from "react";
+export interface RadioProps {
+  0?: undefined;
+}
 
-export interface RadioProps {}
-
-export function Radio({ ...props }: RadioProps) {}
+export function Radio({}: RadioProps) {}

@@ -17,9 +17,9 @@ export function Switch({
 }: SwitchProps) {
   const [foreground, setForeground] = useState<string | undefined>(undefined);
   const [background, setBackground] = useState<string | undefined>(undefined);
-  const [iconScale, setIconScale] = useState<number | undefined>(undefined);
-  const [scale, setScale] = useState<number | undefined>(undefined);
-  const [border, setBorder] = useState<string | undefined>(undefined);
+  // const [iconScale, setIconScale] = useState<number | undefined>(undefined);
+  // const [scale, setScale] = useState<number | undefined>(undefined);
+  // const [border, setBorder] = useState<string | undefined>(undefined);
   const [cursor, setCursor] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -32,11 +32,11 @@ export function Switch({
     if (toggled) {
       setForeground("gray-100");
       setBackground("blue-500");
-      setBorder("gray-600");
+      // setBorder("gray-600");
     } else {
       setForeground("red-800");
       setBackground("gray-50");
-      setBorder("gray-300");
+      // setBorder("gray-300");
     }
   }, [toggled, disabled]);
   return (

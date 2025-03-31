@@ -1,4 +1,4 @@
-import { Flex } from "api/components/layout/Flex";
+import { Flex } from "api/components/web/layout/Flex";
 import React, { ReactNode } from "react";
 
 export type FeedbackType = "success" | "error" | "warning" | "info";

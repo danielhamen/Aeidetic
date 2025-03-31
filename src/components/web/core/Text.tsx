@@ -1,4 +1,4 @@
-import { NextFont, NextFontWithVariable } from "next/dist/compiled/@next/font";
+import { NextFontWithVariable } from "next/dist/compiled/@next/font";
 import React, { HTMLAttributes, ReactNode } from "react";
 import { FontRegistry } from "api/app/__layout/__font";
 
@@ -18,40 +18,6 @@ export const fontFor = (font: TextFont): NextFontWithVariable => {
     default:
       return FontRegistry.regular;
   }
-};
-
-export const weightFor = (font: NextFont, weight: number): number => {
-  if (!font.weights) return 400;
-
-  const weights = (font.weights as string[]).map((w) => parseInt(w, 10)).sort();
-
-  if (weights.includes(weight)) {
-    return weight;
-  }
-
-  if (weight < weights[0]) {
-    return weights[0];
-  }
-
-  if (weight > weights[weights.length - 1]) {
-    return weights[weights.length - 1];
-  }
-
-  for (let i = 0; i < weights.length - 1; i++) {
-    const w0 = weights[i];
-    const w1 = weights[i + 1];
-
-    // In between two weights
-    if (w0 < weight && w1 > weight) {
-      // Return the closest weight
-      if (Math.abs(w0 - weight) > Math.abs(weight - w1)) {
-        return w1;
-      }
-      return w0;
-    }
-  }
-
-  return 400;
 };
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {

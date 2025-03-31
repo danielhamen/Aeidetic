@@ -1,4 +1,4 @@
-import { Endpoint, EndpointRequest } from "./Endpoint";
+import { Endpoint } from "./Endpoint";
 
 export interface Module {
   id: string;

@@ -5,7 +5,7 @@ import { LexemeNode } from "../Types/LexemeNode";
 import { LayoutNode } from "../Types/LayoutNode";
 import { VNode } from "../Types/VNode";
 import { VCursor } from "../Types/VCursor";
-import { Flex } from "api/components/layout/Flex";
+import { Flex } from "api/components/web/layout/Flex";
 
 export function TextInteractable({ content }: { content: string }) {
   return <span className="cursor-interactable">{content}</span>;
@@ -93,24 +93,24 @@ export const DocumentProvider = ({
   const [name, setName] = React.useState<string>("");
   const [desc, setDesc] = React.useState<string>("");
   const [cursors, setCursors] = useState<VCursor[]>([]);
-  const [cursorMap, setCursorMap] = useState<
-    Record<string, DOMMap<VCursor, HTMLDivElement>>
-  >({});
-  const [lexemeMap, setLexemeMap] = useState<
+  const [cursorMap] = useState<Record<string, DOMMap<VCursor, HTMLDivElement>>>(
+    {},
+  );
+  const [lexemeMap] = useState<
     Record<string, DOMMap<LexemeNode, HTMLSpanElement>>
   >({});
-  const [layoutMap, setLayoutMap] = useState<
-    Record<string, DOMMap<VNode, HTMLDivElement>>
-  >({});
-  const [CursorLayer, setCursorLayer] = useState<ReactNode>(null);
+  const [layoutMap] = useState<Record<string, DOMMap<VNode, HTMLDivElement>>>(
+    {},
+  );
+  const [CursorLayer] = useState<ReactNode>(null);
   const [ContentLayer, setContentLayer] = useState<ReactNode>(null);
   const [DocumentLayer, setDocumentLayer] = useState<ReactNode>(null);
 
   // Build ContentLayer and DocumentLayer
   useEffect(() => {
-    const _cursorMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
-    const _lexemeMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
-    const _layoutMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
+    // const _cursorMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
+    // const _lexemeMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
+    // const _layoutMap: Record<string, DOMMap<VNode, HTMLDivElement>> = {};
     const contentLayer = () => (
       <Flex grow className={`absolute z-20`}>
         <Flex direction={"column"}>
@@ -215,7 +215,23 @@ export const DocumentProvider = ({
         export: () => {},
       },
     });
-  }, [name, desc, documentContent, modules, layoutNodes]);
+  }, [
+    name,
+    desc,
+    documentContent,
+    modules,
+    layoutNodes,
+    cursors,
+    cursorMap,
+    lexemeMap,
+    layoutMap,
+    CursorLayer,
+    ContentLayer,
+    DocumentLayer,
+    registerNode,
+    unregisterNode,
+    getNodeById,
+  ]);
 
   return (
     <DocumentContext.Provider value={document}>

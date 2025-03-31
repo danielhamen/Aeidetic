@@ -142,25 +142,47 @@ export class WordManager implements IWordManager {
     return this.words;
   }
 
-  static parseWord(word: any): Word | undefined {
+  static isWordLike(obj: unknown): obj is Word {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      "lexeme" in obj &&
+      "id" in obj &&
+      "definition" in obj &&
+      "example" in obj &&
+      "etymology" in obj &&
+      "pronunciation" in obj &&
+      "ipa" in obj &&
+      "partOfSpeech" in obj &&
+      "date" in obj &&
+      "synonyms" in obj &&
+      "antonyms" in obj &&
+      "related" in obj &&
+      "translations" in obj
+    );
+  }
+
+  static parseWord(word: unknown): Word | undefined {
+    if (!this.isWordLike(word)) return undefined;
+
     const wordRecord: Word = {
-      lexeme: word?.lexeme,
-      id: word?.id,
-      definition: word?.definition,
-      example: word?.example,
-      etymology: word?.etymology,
-      pronunciation: word?.pronunciation,
-      ipa: word?.ipa,
-      partOfSpeech: word?.partOfSpeech,
-      date: word?.date,
-      synonyms: word?.synonyms,
-      antonyms: word?.antonyms,
-      related: word?.related,
+      lexeme: word.lexeme,
+      id: word.id,
+      definition: word.definition,
+      example: word.example,
+      etymology: word.etymology,
+      pronunciation: word.pronunciation,
+      ipa: word.ipa,
+      partOfSpeech: word.partOfSpeech,
+      date: word.date,
+      synonyms: word.synonyms,
+      antonyms: word.antonyms,
+      related: word.related,
       translations: {
-        de: word?.translations?.de,
-        fr: word?.translations?.fr,
-        es: word?.translations?.es,
-        it: word?.translations?.it,
+        de: word.translations.de,
+        fr: word.translations.fr,
+        es: word.translations.es,
+        it: word.translations.it,
       },
     };
 
@@ -171,7 +193,7 @@ export class WordManager implements IWordManager {
 /**
  * Parses a date string in the format YYYY-MM-DD.
  */
-function parseDate(dateString: any): Date | undefined {
+function parseDate(dateString: unknown): Date | undefined {
   if (typeof dateString !== "string") return undefined;
 
   const packedDate = dateString.split("-").map(Number);
@@ -216,7 +238,7 @@ const Middleware: Record<string, EndpointMiddleware> = {
     };
 
     if (isValid(q)) {
-      return true;
+      return;
     }
 
     blockRequest("BAD");

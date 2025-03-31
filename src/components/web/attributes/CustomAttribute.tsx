@@ -57,7 +57,7 @@ export function WidthProvider({
       style={{
         minWidth:
           typeof containerWidth === "number" ? containerWidth : undefined,
-        width: containerWidth,
+        width: containerWidth ?? undefined,
         maxWidth: "100%",
       }}
     >

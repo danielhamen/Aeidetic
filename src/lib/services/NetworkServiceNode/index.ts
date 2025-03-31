@@ -1,5 +1,5 @@
-import { ServicePermission } from "./../ServicePermission.ts";
-import { ServiceNode } from "./../ServiceNode.ts";
+import { ServicePermission } from "./../ServicePermission";
+import { ServiceNode } from "./../ServiceNode";
 
 export class NetworkServiceNode extends ServiceNode {
   constructor() {
@@ -20,7 +20,7 @@ export class NetworkServiceNode extends ServiceNode {
     return url;
   }
 
-  async getRequest(url: string): Promise<any> {
+  async getRequest(url: string): Promise<unknown> {
     await this.ensurePermission(ServicePermission.NETWORK_ACCESS);
     const sanitizedUrl = await this.sanitizeUrl(url);
 
@@ -31,7 +31,7 @@ export class NetworkServiceNode extends ServiceNode {
     return response.json();
   }
 
-  async postRequest(url: string, data: any): Promise<any> {
+  async postRequest(url: string, data: unknown): Promise<unknown> {
     await this.ensurePermission(ServicePermission.NETWORK_ACCESS);
     const sanitizedUrl = await this.sanitizeUrl(url);
 

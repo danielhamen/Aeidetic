@@ -3,19 +3,17 @@ import React, {
   FC,
   ReactNode,
   useContext,
-  useEffect,
   useState,
 } from "react";
-import { encode, decode } from "html-entities";
 
-export type EntitiesJsonData = {};
+export type EntitiesJsonData = object;
 
 const EntitiesContext = createContext<EntitiesJsonData | undefined>(undefined);
 
 export const HtmlEntitiesProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [entities, setEntities] = useState<EntitiesJsonData>({});
+  const [entities] = useState<EntitiesJsonData>({});
 
   // useEffect(() => {
   //   fetch("/assets/data/htmlEntities.json")
@@ -42,8 +40,10 @@ export function useHtmlEncode(): {
     );
   }
 
+  throw new Error("Not implemented");
+
   return {
-    encode: (s: string) => encode(s).replace(/ /g, "&nbsp;"),
-    decode: (s: string) => decode(s),
+    encode: (s: string) => s,
+    decode: (s: string) => s,
   };
 }

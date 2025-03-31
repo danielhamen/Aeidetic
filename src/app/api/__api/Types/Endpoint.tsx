@@ -15,7 +15,9 @@ export type JSONEndpoint = Record<string, unknown>;
 export type Endpoint = {
   path: string;
   contentType: "application/xml" | "application/json";
-  content: (req: EndpointRequest) => Promise<XMLEndpoint | JSONEndpoint>;
+  content: (
+    req: EndpointRequest,
+  ) => Promise<XMLEndpoint | JSONEndpoint | undefined>;
   middleware?: Middleware[];
   method: "GET" | "POST" | "PUT" | "DELETE";
 };

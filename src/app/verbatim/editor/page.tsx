@@ -1,20 +1,9 @@
 "use client";
 
-import React, { FC, ReactNode, useState, useRef, useEffect } from "react";
-import { Flex } from "api/components/layout/Flex";
-import { Icon } from "api/components/icon/Icon";
-import { Button } from "api/components/input/Button";
-import { Text } from "api/components/core/Text";
+import { Flex } from "api/components/web/layout/Flex";
 import { useDocument, DocumentProvider } from "./lib/CoreUI/UIDocument";
-import { LexemeNode } from "./lib/Types/LexemeNode";
 
-export function CursorLayer() {
-  const document = useDocument();
-  if (!document) return null;
-  return <Flex grow className={`absolute z-30`}></Flex>;
-}
-
-export function Layout() {
+function Layout() {
   const document = useDocument();
   if (!document) return null;
 

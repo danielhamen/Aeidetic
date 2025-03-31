@@ -1,5 +1,5 @@
 import { LayoutNode } from "../Types/LayoutNode";
-import { InlineNode } from "../Types/InlineNode";
+import { LexemeNode } from "../Types/LexemeNode";
 import { ModulePermission } from "./ModulePermission";
 
 export interface Module {
@@ -8,5 +8,5 @@ export interface Module {
   desc?: string;
   author?: string;
   permissions: ModulePermission[];
-  registrations: (LayoutNode | InlineNode)[];
+  registrations: (LayoutNode | LexemeNode)[];
 }

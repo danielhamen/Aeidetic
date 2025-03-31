@@ -21,9 +21,8 @@ export interface ButtonProps
 export function Button({
   children,
   disabled,
-  buttonStyle,
   textContent,
-  buttonContent = "icon",
+  buttonContent = "text",
   textAlign,
   width = "fit",
   ...props
@@ -32,7 +31,7 @@ export function Button({
     <WidthProvider width={buttonContent === "icon" ? "fit" : width}>
       <CoreButton
         {...props}
-        className={`flex bg-blue-500 text-white border-none transition-all duration-100 outline-0 outline-blue-200 active:outline-4 p-2 ${buttonContent === "text" ? "px-4 rounded-lg" : "rounded-full items-center justify-center size-12"} ${props.className || ""}`}
+        className={`flex bg-blue-500 text-white border-none transition-all duration-100 outline-0 outline-blue-200 active:outline-4 p-2 ${buttonContent === "text" ? "px-4 rounded-lg w-fit" : "rounded-full items-center justify-center size-12"} ${props.className || ""}`}
         style={{
           cursor: disabled ? "not-allowed" : "pointer",
           ...props.style,

@@ -1,11 +1,11 @@
 "use client";
-import { Flex } from "api/components/layout/Flex";
+import { Flex } from "api/components/web/layout/Flex";
 import { useTime } from "api/hooks/useTime";
 import React, { useContext, useEffect, useState } from "react";
 
-export const ClockContext = React.createContext<ClockContextProps | null>(null);
+const ClockContext = React.createContext<ClockContextProps | null>(null);
 
-export function ClockProvider({ children }: { children: React.ReactNode }) {
+function ClockProvider({ children }: { children: React.ReactNode }) {
   const [currentTime, setCurrentTime] = useState<number>(useTime());
   const [radius, setRadius] = useState(300);
   const [currentHour, setCurrentHour] = useState(0);
@@ -35,7 +35,7 @@ export function ClockProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export interface ClockContextProps {
+interface ClockContextProps {
   currentTime: number;
   setCurrentTime: (time: number) => void;
   currentHour: number;
@@ -45,7 +45,7 @@ export interface ClockContextProps {
   setRadius: (radius: number) => void;
 }
 
-export function useClock(): ClockContextProps {
+function useClock(): ClockContextProps {
   const context = useContext(ClockContext);
   if (!context) {
     throw new Error("useClock must be used within a ClockProvider");
@@ -53,7 +53,7 @@ export function useClock(): ClockContextProps {
   return context;
 }
 
-export function IntervalDash({
+function IntervalDash({
   angle,
   x,
   y,
@@ -81,12 +81,12 @@ export function IntervalDash({
   );
 }
 
-export interface HandProps extends React.HTMLAttributes<HTMLDivElement> {
+interface HandProps extends React.HTMLAttributes<HTMLDivElement> {
   angle: number;
   length: number;
 }
 
-export function Hand({ angle, length, ...props }: HandProps) {
+function Hand({ angle, length, ...props }: HandProps) {
   return (
     <Flex
       {...props}
@@ -108,7 +108,7 @@ export function Hand({ angle, length, ...props }: HandProps) {
 /**
  * Creates the ticks and numbers
  */
-export function Contour() {
+function Contour() {
   const { radius } = useClock();
   const [iterMap] = useState(() => new Array(60).fill(null));
 
@@ -160,7 +160,7 @@ export function Contour() {
   );
 }
 
-export function Clock() {
+function Clock() {
   const { currentHour, currentMinute, currentSecond, radius } = useClock();
   const toAngle = (v: number, max: number) => (v / max) * 360;
   return (

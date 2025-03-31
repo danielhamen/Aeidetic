@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { writeFile, unlink, join } from "fs/promises";
+import { join } from "path";
 import { ServiceNode } from "../ServiceNode";
 import { ServicePermission } from "../ServicePermission";
 
@@ -23,10 +23,10 @@ export class BinaryServiceNode extends ServiceNode {
   /**
    * Executes a registered binary executable.
    */
-  async executeCommand(exec: string, args: string[]) {
-    const execPath = join(this.rootDirectory, exec);
+  async executeCommand(execp: string, args: string[]) {
+    const execPath = join(this.rootDirectory, execp);
     try {
-      const result = await exec(`${execPath} ${args.join(" ")}`);
+      const result = exec(`${execPath} ${args.join(" ")}`);
       console.log(
         `[${this.serviceName}] Executed ${execPath} with args ${args.join(", ")}`,
       );

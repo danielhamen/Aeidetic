@@ -1,3 +1,4 @@
+import "material-symbols";
 import { TimeProvider } from "api/hooks/useTime";
 import React, { ReactNode } from "react";
 

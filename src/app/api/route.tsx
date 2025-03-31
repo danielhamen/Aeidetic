@@ -1,10 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { Modules } from "./__api/Modules";
-import {
-  EndpointRequest,
-  XMLEndpoint,
-  JSONEndpoint,
-} from "./__api/Types/Endpoint";
+import { EndpointRequest } from "./__api/Types/Endpoint";
 
 // Handle GET requests
 export async function GET(req: NextRequest) {

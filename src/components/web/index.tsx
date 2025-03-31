@@ -47,7 +47,7 @@ export type { TextAttributeProps } from "./attributes/TextAttribute";
 
 // Icon
 export { Icon } from "./icon/Icon";
-export type { IconProps, IconTypes } from "./icon/Icon";
+export type { IconProps } from "./icon/Icon";
 
 // Core
 export { Button as CButton } from "./core/Button";
