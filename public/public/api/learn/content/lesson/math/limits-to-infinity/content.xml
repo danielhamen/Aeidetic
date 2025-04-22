@@ -1,0 +1,57 @@
+<lesson>
+  <section id="introduction">
+    <h1>Introduction</h1>
+    <content>
+      <p>
+        Limits at infinity describe the behavior of a function as the input variable becomes arbitrarily large in the positive or negative direction. In these situations, we’re not interested in what the function equals at any specific point, but rather what value it approaches as the input increases or decreases without bound.
+      </p>
+      <p>
+        We write this behavior using limit notation. For example:
+      </p>
+      <math
+                tex="\displaystyle \lim_{x \to \infty} \frac{1}{x} = 0"
+                align="center"
+            />
+      <p>
+        This tells us that as x becomes very large, the value of \( \frac{1}{x} \) gets arbitrarily close to 0.
+      </p>
+    </content>
+  </section>
+
+  <section id="rules">
+    <h1>Key Rules for Limits at Infinity</h1>
+    <content>
+      <ul>
+        <li
+                >If the degree of the numerator is less than the degree of the denominator, the limit is 0.</li>
+        <li
+                >If the degrees are equal, the limit is the ratio of leading coefficients.</li>
+        <li
+                >If the degree of the numerator is greater than the degree of the denominator, the limit is \( \infty \) or \( -\infty \).</li>
+      </ul>
+    </content>
+  </section>
+
+  <section id="example">
+    <h1>Example</h1>
+    <content>
+      <p>Consider the following rational function:</p>
+      <math tex="\displaystyle \lim_{x \to \infty} \frac{3x^2 + 5}{x^2 - 2}" />
+      <p>Since the <definition
+                    word="degree"
+                    meaning="The highest power of the variable in a polynomial"
+                >degree</definition> are equal (both quadratic), take the ratio of leading coefficients:</p>
+      <math tex="\displaystyle \frac{3}{1} = 3" />
+      <p>So, the limit is 3.</p>
+    </content>
+  </section>
+
+  <section id="intuition">
+    <h1>Intuition</h1>
+    <content>
+      <quote>At infinity, lower-degree terms become negligible.</quote>
+      <p
+            >For large values of x, terms like "+5" or "-2" have almost no effect on the limit because the dominant term governs the behavior of the function.</p>
+    </content>
+  </section>
+</lesson>

@@ -1,226 +1,166 @@
-import math
-from abc import (ABC,abstractmethod)
-import re
-from typing import (Iterable, List, Optional, Generic, TypeVar)
-from enum import Enum
+# Expression base
+from axiom.lib.Expression import Expression
 
-class Expression(ABC):
-    @abstractmethod
-    def __latex__(self) -> str: ...
+# Domain
+from axiom.lib.Domain.Domain import Domain
+from axiom.lib.Domain.Real import Real
+from axiom.lib.Domain.ComplexDomain import ComplexDomain
+from axiom.lib.Domain.VectorSpace import VectorSpace
+from axiom.lib.Domain.MatrixSpace import MatrixSpace
+from axiom.lib.Domain.FunctionSpace import FunctionSpace
 
-    def __str__(self) -> str: ...
+# Evaluation
+from axiom.lib.Evaluation.Evaluation import Evaluation
+from axiom.lib.Evaluation.Summation import Summation
+from axiom.lib.Evaluation.Product import Product
+from axiom.lib.Evaluation.Integral import Integral
+from axiom.lib.Evaluation.Derivative import Derivative
+from axiom.lib.Evaluation.Partial import Partial
+from axiom.lib.Evaluation.Differential import Differential
+from axiom.lib.Evaluation.Limit import Limit
 
-    def __repr__(self) -> str: ...
+# Form
+from axiom.lib.Form.Form import Form
+from axiom.lib.Form.Fraction import Fraction
+from axiom.lib.Form.Radical import Radical
+from axiom.lib.Form.Power import Power
+from axiom.lib.Form.Logarithm import Logarithm
+from axiom.lib.Form.Delimited import Delimited
+from axiom.lib.Form.Call import Call
+from axiom.lib.Form.Piecewise import Piecewise
+from axiom.lib.Form.Index import Index
+from axiom.lib.Form.Recurrence import Recurrence
+from axiom.lib.Form.Factorial import Factorial
 
-class MatrixDelimiter(Enum):
-    plain = r"\plain"
-    leftCeil = r"\lceil"
-    rightCeil = r"\rceil"
-    leftFloor = r"\lfloor"
-    rightFloor = r"\rfloor"
-    leftAngle = r"\langle"
-    rightAngle = r"\rangle"
-    leftBrace = r"{"
-    rightBrace = r"}"
-    leftParentheses = r"("
-    rightParentheses = r")"
-    leftBracket = r"["
-    rightBracket = r"]"
-    leftPipe = r"\lvert"
-    rightPipe = r"\rvert"
-    leftDoublepipe = r"\lVert"
-    rightDoublepipe = r"\rVert"
+# Logic
+from axiom.lib.Logic.Logic import Logic
+from axiom.lib.Logic.Equal import Equal
+from axiom.lib.Logic.NotEqual import NotEqual
+from axiom.lib.Logic.Less import Less
+from axiom.lib.Logic.Greater import Greater
+from axiom.lib.Logic.And import And
+from axiom.lib.Logic.Or import Or
+from axiom.lib.Logic.Not import Not
+from axiom.lib.Logic.In import In
 
-T = TypeVar('T')
+# Operator
+from axiom.lib.Operator.Operator import Operator
+from axiom.lib.Operator.Addition import Addition
+from axiom.lib.Operator.Subtraction import Subtraction
+from axiom.lib.Operator.Multiplication import Multiplication
+from axiom.lib.Operator.Division import Division
+from axiom.lib.Operator.Exponentiation import Exponentiation
+from axiom.lib.Operator.Dot import Dot
+from axiom.lib.Operator.Cross import Cross
+from axiom.lib.Operator.Metric import Metric
+from axiom.lib.Operator.Absolute import Absolute
+from axiom.lib.Operator.Normal import Normal
+from axiom.lib.Operator.Apply import Apply
+from axiom.lib.Operator.Determinent import Determinent
 
-class Pair(Generic[T]):
-    def __init__(self, first: T, second: T) -> None:
-        self.first = first
-        self.second = second
+# Set
+from axiom.lib.Set.Set import Set
+from axiom.lib.Set.Interval import Interval
+from axiom.lib.Set.FiniteSet import FiniteSet
+from axiom.lib.Set.SetOp import SetOp
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Pair):
-            return False
-        return self.first == other.first and self.second == other.second
+# Transform
+from axiom.lib.Transform.Transform import Transform
+from axiom.lib.Transform.Expand import Expand
+from axiom.lib.Transform.Factor import Factor
+from axiom.lib.Transform.Differentiate import Differentiate
+from axiom.lib.Transform.Trace import Trace
+from axiom.lib.Transform.Transpose import Transpose
+from axiom.lib.Transform.Inverse import Inverse
+from axiom.lib.Transform.GCD import GCD
+from axiom.lib.Transform.LCM import LCM
+from axiom.lib.Transform.Re import Re
+from axiom.lib.Transform.Im import Im
 
-    def __str__(self) -> str:
-        return f"({self.first}, {self.second})"
+# Symbol
+from axiom.lib.Symbol.Symbol import Symbol
+from axiom.lib.Symbol.Var import Var
+from axiom.lib.Symbol.Const import Const
+from axiom.lib.Symbol.Complex import Complex
+from axiom.lib.Symbol.Matrix import Matrix
+from axiom.lib.Symbol.Vector import Vector
+from axiom.lib.Symbol.Quantity import Quantity
+from axiom.lib.Symbol.Sequence import Sequence
+from axiom.lib.Symbol.Tensor import Tensor
+from axiom.lib.Symbol.Function import Function
+from axiom.lib.Symbol.Infinity import Infinity
+from axiom.lib.Symbol.NaN import NaN
 
-    def __repr__(self) -> str:
-        return f"Pair(first={self.first}, second={self.second})"
+# Trigonometric
+from axiom.lib.Symbol.Trigonometric.Trigonometric import Trigonometric
+from axiom.lib.Symbol.Trigonometric.Sin import Sin
+from axiom.lib.Symbol.Trigonometric.Cos import Cos
+from axiom.lib.Symbol.Trigonometric.Tan import Tan
+from axiom.lib.Symbol.Trigonometric.Sec import Sec
+from axiom.lib.Symbol.Trigonometric.Csc import Csc
+from axiom.lib.Symbol.Trigonometric.Cot import Cot
+from axiom.lib.Symbol.Trigonometric.Sinh import Sinh
+from axiom.lib.Symbol.Trigonometric.Cosh import Cosh
+from axiom.lib.Symbol.Trigonometric.Tanh import Tanh
+from axiom.lib.Symbol.Trigonometric.Arcsin import Arcsin
+from axiom.lib.Symbol.Trigonometric.Arccos import Arccos
+from axiom.lib.Symbol.Trigonometric.Arctan import Arctan
+from axiom.lib.Symbol.Trigonometric.Arcsec import Arcsec
+from axiom.lib.Symbol.Trigonometric.Arccsc import Arccsc
+from axiom.lib.Symbol.Trigonometric.Arccot import Arccot
+from axiom.lib.Symbol.Trigonometric.Arcsinh import Arcsinh
+from axiom.lib.Symbol.Trigonometric.Arccosh import Arccosh
+from axiom.lib.Symbol.Trigonometric.Arctanh import Arctanh
 
-class Symbol(Expression):
-    def __init__(self, *, real: Optional[float] = None, integer: Optional[int] = None, complex: Optional[int] = None) -> None:
-        pass
+from axiom.lib.AbstractExpression import (AbstractExpression, coerce_expr)
 
-    def __latex__(self) -> str:
-        return f"\\text{{{self.__class__.__name__}}}"
 
-class Infinity(Expression):
-    def __latex__(self) -> str:
-        return r"\infty"
+# if __name__ == "__main__":
+#     # Basic testing of some classes:
+#     os.system("clear")
 
-class Matrix(Expression):
-    _data: list[list[int]]
-    delimiters: Pair[MatrixDelimiter]
+#     print(
+#         LCM(Const(8), Const(16)).evaluate()
+#     )
 
-    def __init__(self, data: Optional[list[list[int]]] = None, *, delimiters: Optional[Pair[MatrixDelimiter]] = None):
-        self._data = data or [[]]
-        self.delimiters = delimiters or Pair(MatrixDelimiter.leftBracket, MatrixDelimiter.rightBracket)
+#     x = Var("x")
+#     y = Const(4.5)
+#     frac = Fraction(x, y)
+#     rad = Radical(x)
+#     pwr = Power(x, Const(2))
+#     log_expr = Logarithm(x)
+#     fact = Factorial(x)
+#     gcd_expr = GCD(Const(12), Const(8))
+#     lcm_expr = LCM(Const(12), Const(8))
+#     # re_expr = Re(Complex(x, Const(2)))
+#     # im_expr = Im(Complex(x, Const(2)))
+#     # trans = Transpose(Matrix([[x, y], [Const(1), Const(0)]]))
+#     tr_expr = Trace(Matrix([[Const(2), Const(5)], [Const(1), Const(0)]]))
+#     # inv_expr = Inverse(Matrix([[x, y], [Const(1), Const(0)]]))
+#     func = Sin(x)
+#     # vec = Vector([x, Const(3), y])
+#     # comp = Complex(x, Const(2))
+#     mat = Matrix([[x, y], [Const(1), Const(0)]])
+#     ctx = {
+#         "x": Const(2),
+#         "y": Const(5)
+#     }
 
-    @property
-    def data(self) -> list[list[int]]:
-        return self._data
-
-    def __getitem__(self, i):
-        # Handle single i (e.g., m[0] returns the row)
-        if isinstance(i, int):
-            return self._data[i]
-        # Handle slice (e.g., m[0:2])
-        elif isinstance(i, slice):
-            return Matrix(self._data[i])
-        # Handle tuple (e.g., m[0, 1])
-        elif isinstance(i, tuple):
-            row, col = i
-            return self._data[row][col]
-        else:
-            raise TypeError("Invalid index type")
-
-    def __setitem__(self, j, v):
-        # Handle single j (e.g., m[0] = [1, 2])
-        if isinstance(j, int):
-            self._data[j] = v
-        # Handle tuple (e.g., m[0, 1] = 5)
-        elif isinstance(j, tuple):
-            row, col = j
-            self._data[row][col] = v
-        else:
-            raise TypeError("Invalid j type")
-
-    def __str__(self):
-        return '\n'.join([' '.join(map(str, row)) for row in self._data])
-
-    def __latex__(self) -> str:
-        # default delimiter values
-        l_del = self.delimiters.first
-        r_del = self.delimiters.second
-
-        # inner contents of matrix 'matrix contents'
-        mc = "\\\\ ".join([" & ".join([f"{{{y.__str__()}}}" for y in x]) for x in self._data])
-
-        return fr"""
-\left {l_del.value}
-\begin{{matrix}}
-    {mc}
-\end{{matrix}}
-\right {r_del.value}
-"""
-
-    def __repr__(self) -> str:
-        return f"Matrix(data={self._data}, delimiters={self.delimiters})"
-
-class Vector(Expression):
-    _data: list[int]
-    delimiters: Pair[MatrixDelimiter]
-
-    def __init__(self, data: Optional[list[int]] = None):
-        self._data = data or []
-
-    @property
-    def data(self) -> list[int]:
-        return self._data
-
-    def __getitem__(self, i):
-        # Handle single i (e.g., m[0] returns the row)
-        if isinstance(i, int):
-            return self._data[i]
-        else:
-            raise TypeError("Invalid index type")
-
-    def __setitem__(self, j, v):
-        if isinstance(j, int):
-            self._data[j] = v
-        else:
-            raise TypeError("Invalid j type")
-
-class Norm(Expression):
-    def __init__(self, body: Expression):
-        self._body = body
-
-    def __eval__(self) -> Expression:
-        if isinstance(self._body, Matrix):
-            pass
-        elif isinstance(self._body, Vector):
-            v: Vector = self._body
-            return Radical(sum([x**2 for x in v.data]))
-        else:
-            raise TypeError("Unknown type to perform norm.")
-
-    def __latex__(self) -> str:
-        return f"\\left|{{{self._body.__latex__()}}}\\right|"
-
-class Det(Expression):
-    pass
-
-class Abs(Expression):
-    def __init__(self, body: Expression):
-        self._body = body
-
-    def __eval__(self) -> Expression:
-        if isinstance(self._body, Matrix):
-            pass
-        elif isinstance(self._body, int):
-            return abs(self._body)
-        else:
-            raise TypeError("Unknown type to perform abs.")
-
-    def __latex__(self) -> str:
-        return f"\\left|{{{self._body.__latex__()}}}\\right|"
-
-class Radical(Symbol):
-    index: Symbol
-    radicand: Symbol
-
-    def __init__(self, radicand: Symbol, *, index: Symbol = Symbol(integer=2)):
-        self.index = index
-        self.radicand = radicand
-
-    def __latex__(self) -> str:
-        return f"\\sqrt[{self.index.__latex__()}]{{{self.radicand.__latex__()}}}"
-
-class Fraction(Symbol):
-    numerator: Symbol
-    denominator: Symbol
-
-    def __init__(self, numerator: Symbol, denominator: Symbol):
-        self.numerator = numerator
-        self.denominator = denominator
-
-    def __latex__(self) -> str:
-        return f"\\frac{{{self.numerator.__latex__()}}}{{{self.denominator.__latex__()}}}"
-
-class Power(Symbol):
-    base: Symbol
-    exponent: Symbol
-
-    def __init__(self, base: Symbol, exponent: Symbol):
-        self.base = base
-        self.exponent = exponent
-
-    def __latex__(self) -> str:
-        return f"{{{self.base.__latex__()}}}^{{{self.exponent.__latex__()}}}"
-
-class Summation(Symbol):
-    index: Symbol
-    lower_bound: Symbol
-    upper_bound: Symbol
-    body: Symbol
-
-    def __init__(self, index: Symbol, lower_bound: Symbol, upper_bound: Symbol, body: Symbol):
-        self.index = index
-        self.lower_bound = lower_bound
-        self.upper_bound = upper_bound
-        self.body = body
-
-    def __latex__(self) -> str:
-        return f"\\sum_{{{self.index.__latex__()}={self.lower_bound.__latex__()}}}^{{{self.upper_bound.__latex__()}}}{{{self.body.__latex__()}}}"
+#     # print("Fraction:", frac)
+#     # print("Radical:", rad)
+#     # print("Power:", pwr)
+#     # print("Logarithm:", log_expr)
+#     # print("Factorial:", fact)
+#     # print("GCD:", gcd_expr)
+#     # print("LCM:", lcm_expr)
+#     # print("Re:", re_expr)
+#     # print("Im:", im_expr)
+#     # print("Transpose:", trans)
+#     print("Trace:", tr_expr)
+#     tr_expr = tr_expr.simplify()
+#     print("Trace Evaluated:", tr_expr)
+#     # print("Inverse:", inv_expr)
+#     # print("Function (sin):", func)
+#     # # print("Vector:", vec)
+#     # # print("Complex:", comp)
+#     # print("Matrix:", mat)

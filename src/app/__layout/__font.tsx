@@ -5,6 +5,8 @@ import {
   Quicksand,
   Monsieur_La_Doulaise,
   Urbanist,
+  DM_Sans,
+  DM_Mono,
 } from "next/font/google";
 
 export const Code = Geist_Mono({
@@ -67,16 +69,22 @@ export const Cursive = Monsieur_La_Doulaise({
   weight: ["400"],
 });
 
-export const Regular = Urbanist({
+export const Regular = DM_Sans({
   variable: "--font",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-export const Mono = Geist_Mono({
+export const Mono = DM_Mono({
   variable: "--font",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
+});
+
+export const Caption = Quicksand({
+  variable: "--font",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const FontRegistry = {
@@ -85,4 +93,5 @@ export const FontRegistry = {
   cursive: Cursive,
   regular: Regular,
   mono: Mono,
+  caption: Caption,
 } as const;

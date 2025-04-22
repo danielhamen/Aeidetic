@@ -1,0 +1,16 @@
+{
+  "id": "unit/cs/foundations-of-algorithms",
+  "title": "Foundations of Algorithms",
+  "description": "This unit covers the fundamental concepts of algorithms and data structures.",
+  "modules": [
+    {
+      "ref": "module/cs/introduction-to-algorithms"
+    },
+    {
+      "ref": "module/cs/complexity-analysis"
+    },
+    {
+      "ref": "module/cs/time-and-space-complexity"
+    }
+  ]
+}

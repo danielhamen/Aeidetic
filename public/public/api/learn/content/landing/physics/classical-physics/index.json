@@ -1,0 +1,40 @@
+{
+  "id": "landing/physics/classical-physics",
+  "title": "Classical Physics",
+  "subtitle": "Explore our Physics I, II, and III courses",
+  "sections": [
+    {
+      "title": "Physics I",
+      "points": [
+        "Kinematics & Dynamics",
+        "Newton’s Laws of Motion",
+        "Work, Energy, & Power",
+        "Momentum & Collisions",
+        "Rotational Motion"
+      ],
+      "ref": "course/physics/physics-i"
+    },
+    {
+      "title": "Physics II",
+      "points": [
+        "Electric Fields & Forces",
+        "Circuits & Current",
+        "Magnetic Fields & Induction",
+        "Electromagnetic Waves",
+        "DC & AC Circuit Applications"
+      ],
+      "ref": "course/physics/physics-ii"
+    },
+    {
+      "title": "Physics III",
+      "points": [
+        "Optics & Wave Phenomena",
+        "Thermodynamics",
+        "Fluid Mechanics",
+        "Modern Physics Foundations",
+        "Nuclear & Atomic Models"
+      ],
+      "ref": "course/physics/physics-iii"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "unit/math/pre-calculus-review",
+  "title": "Pre-Calculus Review",
+  "description": "This unit reviews the concepts taught in Pre Calculus.",
+  "modules": [
+    {
+      "ref": "module/math/functions-and-graphs"
+    }
+  ]
+}

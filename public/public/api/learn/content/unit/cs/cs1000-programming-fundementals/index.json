@@ -1,0 +1,16 @@
+{
+  "id": "unit/cs/cs1000-programming-fundementals",
+  "title": "Programming Fundamentals",
+  "description": "",
+  "modules": [
+    {
+      "ref": "module/cs/cs1000-what-is-programming"
+    },
+    {
+      "ref": "module/cs/cs1000-development-environment"
+    },
+    {
+      "ref": "module/cs/cs1000-program-execution"
+    }
+  ]
+}

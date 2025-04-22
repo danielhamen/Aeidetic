@@ -1,0 +1,6 @@
+{
+  "id": "lesson/cs/cs1000-development-environment",
+  "name": "Development Environment",
+  "type": "lesson",
+  "content": "../content.xml"
+}

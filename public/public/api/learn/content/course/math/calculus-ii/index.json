@@ -1,0 +1,19 @@
+{
+  "id": "course/math/calculus-ii",
+  "code": "MATH-1200",
+  "title": "Calculus II",
+  "highlights": [
+    "Advanced Integration Techniques",
+    "Applications of Integration",
+    "Sequences & Series",
+    "Power Series & Taylor Series",
+    "Parametric & Polar Functions"
+  ],
+  "description": "",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/math/pre-calculus-review"
+    }
+  ]
+}

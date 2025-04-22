@@ -1,0 +1,19 @@
+{
+  "id": "course/math/calculus-iii",
+  "code": "MATH-1300",
+  "title": "Calculus III",
+  "highlights": [
+    "Vectors & 3D Geometry",
+    "Partial Derivatives",
+    "Multiple Integrals",
+    "Vector Fields & Line Integrals",
+    "Theorems of Vector Calculus"
+  ],
+  "description": "",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/math/pre-calculus-review"
+    }
+  ]
+}

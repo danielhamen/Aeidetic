@@ -1,0 +1,43 @@
+{
+  "id": "landing/cs/dsa",
+  "title": "Data Structure & Algorithms",
+  "subtitle": "Discover our Data Structure & Algorithms Courses",
+  "sections": [
+    {
+      "title": "DSA I",
+      "points": [
+        "Arrays & Strings",
+        "Stacks & Queues",
+        "Linked Lists",
+        "Recursion Basics",
+        "Time Complexity"
+      ],
+      "href": "./dsa/dsa-i",
+      "ref": "course/cs/dsa-i"
+    },
+    {
+      "title": "DSA II",
+      "points": [
+        "Trees & Heaps",
+        "Graph Traversal",
+        "Hash Maps",
+        "Sorting Algorithms",
+        "Two-Pointer Pattern"
+      ],
+      "href": "./dsa/dsa-ii",
+      "ref": "course/cs/dsa-ii"
+    },
+    {
+      "title": "DSA III",
+      "points": [
+        "Dynamic Programming",
+        "Greedy Algorithms",
+        "Advanced Graphs",
+        "Segment Trees",
+        "Suffix Structures"
+      ],
+      "href": "./dsa/dsa-iii",
+      "ref": "course/cs/dsa-iii"
+    }
+  ]
+}

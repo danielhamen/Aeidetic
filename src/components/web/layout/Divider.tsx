@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "../core/View";
+import { TailwindColor, backgroundColorMap } from "../core/Text";
 
 /**
  * 📌 `Divider.tsx`
@@ -8,7 +9,7 @@ import { View } from "../core/View";
 export interface DividerProps {
   vertical?: boolean;
   thickness?: string | number;
-  color?: string;
+  color?: TailwindColor;
   maxSize?: string | number;
   minSize?: string | number;
   marginStart?: string | number;
@@ -27,9 +28,10 @@ export const Divider: React.FC<DividerProps> = ({
   marginEnd = 0,
   margin = null,
 }) => {
+  const colorClass = backgroundColorMap[color] ?? "text-gray-800";
   return (
     <View
-      className={`bg-${color}`}
+      className={`${colorClass}`}
       style={{
         width: vertical ? thickness : "100%",
         height: vertical ? "100%" : thickness,

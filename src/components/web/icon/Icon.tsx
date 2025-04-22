@@ -58,10 +58,10 @@ export function Icon({
   name = "DEFAULT",
   size = 24,
   color = "black",
-  // weight = 400,
-  // grade = 0,
-  // opticalSize = 24,
-  // fill = false,
+  weight = 400,
+  grade = 0,
+  opticalSize = 24,
+  fill = false,
   ...props
 }: IconProps) {
   return (
@@ -70,7 +70,7 @@ export function Icon({
       style={{
         userSelect: "none",
         fontSize: size,
-        // fontVariationSettings: `'FILL' ${fill ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`,
+        fontVariationSettings: `'FILL' ${fill ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`,
         ...props.style,
       }}
       className={`material-symbols-rounded text-${color} ${props.className || ""}`}

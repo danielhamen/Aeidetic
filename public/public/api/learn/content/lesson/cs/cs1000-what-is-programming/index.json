@@ -1,0 +1,6 @@
+{
+  "id": "lesson/cs/cs1000-what-is-programming",
+  "name": "What is Programming?",
+  "type": "lesson",
+  "content": "../content.xml"
+}

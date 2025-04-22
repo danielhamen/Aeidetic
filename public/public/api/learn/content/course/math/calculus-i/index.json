@@ -1,0 +1,19 @@
+{
+  "id": "course/math/calculus-i",
+  "code": "MATH-1100",
+  "title": "Calculus I",
+  "highlights": [
+    "Review of Pre-Calculus",
+    "Limits & Continuity",
+    "Derivatives",
+    "Applications of Derivatives",
+    "Basic Integration"
+  ],
+  "description": "",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/math/pre-calculus-review"
+    }
+  ]
+}

@@ -6,6 +6,6 @@
 body {
 }
 
-* {
+*:not(mjx-container):not(mjx-container *) {
     font-family: var(--font);
 }

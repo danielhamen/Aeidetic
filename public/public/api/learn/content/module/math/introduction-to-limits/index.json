@@ -1,0 +1,19 @@
+{
+  "id": "module/math/introduction-to-limits",
+  "name": "Introduction to Limits",
+  "description": "Learn the basics of limits in calculus.",
+  "topics": [
+    {
+      "type": "lesson",
+      "ref": "lesson/math/introduction-to-limits"
+    },
+    {
+      "type": "practice",
+      "ref": "practice/math/introduction-to-limits"
+    },
+    {
+      "type": "quiz",
+      "ref": "quiz/math/introduction-to-limits"
+    }
+  ]
+}

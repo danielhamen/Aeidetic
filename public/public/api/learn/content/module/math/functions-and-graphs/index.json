@@ -1,0 +1,11 @@
+{
+  "id": "module/math/functions-and-graphs",
+  "name": "Functions and Graphs",
+  "description": "Learn about functions and their graphs.",
+  "topics": [
+    {
+      "type": "lesson",
+      "ref": "lesson/math/limits-to-infinity"
+    }
+  ]
+}

@@ -73,6 +73,8 @@ export type { ChartProps } from "./data/Chart";
 export { Bold, B } from "./display/Bold";
 export type { BoldProps } from "./display/Bold";
 
+export { Code } from "./display/Code";
+
 export { Emphasis, Em } from "./display/Emphasis";
 export type { EmphasisProps } from "./display/Emphasis";
 
@@ -88,7 +90,7 @@ export type { UnderlineProps } from "./display/Underline";
 export { Text } from "./display/Text";
 export type { TextProps } from "./display/Text";
 
-export { Caption, C1, C2, C3, C4, C5, C6 } from "./display/Caption";
+export { Caption, C1, C2, C3 } from "./display/Caption";
 export type { CaptionProps } from "./display/Caption";
 
 export { Heading, H1, H2, H3, H4, H5, H6 } from "./display/Heading";
@@ -96,6 +98,9 @@ export type { HeadingProps } from "./display/Heading";
 
 export { Title, T1, T2, T3, T4, T5, T6 } from "./display/Title";
 export type { TitleProps } from "./display/Title";
+
+export { InlineMath, Math } from "./display/InlineMath";
+export { BlockMath } from "./display/BlockMath";
 
 // Feedback
 export { Message } from "./feedback/Message";
@@ -124,3 +129,10 @@ export type { ButtonProps } from "./input/Button";
 
 export { ButtonGroup } from "./input/ButtonGroup";
 export type { ButtonGroupProps } from "./input/ButtonGroup";
+
+// App
+export { AppHeader } from "./app/AppHeader";
+export type { AppHeaderProps } from "./app/AppHeader";
+
+export { AppIcon } from "./app/AppIcon";
+export type { AppIconProps } from "./app/AppIcon";

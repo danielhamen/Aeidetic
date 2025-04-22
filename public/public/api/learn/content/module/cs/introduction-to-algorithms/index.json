@@ -1,0 +1,11 @@
+{
+  "id": "module/cs/introduction-to-algorithms",
+  "name": "Introduction to Algorithms",
+  "description": "",
+  "topics": [
+    {
+      "type": "lesson",
+      "ref": "lesson/math/limits-to-infinity"
+    }
+  ]
+}

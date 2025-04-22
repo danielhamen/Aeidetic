@@ -1,0 +1,101 @@
+<lesson>
+  <section id="introduction">
+    <h1>Introduction</h1>
+    <content>
+      <p>
+        After writing code, you need to execute it — meaning you run it and see what it does. Program execution is how instructions written by a developer are turned into actual actions by the computer.
+      </p>
+      <p>
+        There are different ways to execute programs depending on the language and environment.
+      </p>
+    </content>
+  </section>
+
+  <section id="interpreted-vs-compiled">
+    <h1>Interpreted vs Compiled</h1>
+    <content>
+      <p>
+        Programming languages fall into two main categories based on how code is executed:
+      </p>
+      <ul>
+        <li><b
+                    >Interpreted:</b> Code is read and executed line-by-line (e.g. Python, JavaScript).</li>
+        <li><b
+                    >Compiled:</b> Code is translated into machine code before it runs (e.g. C, Java).</li>
+      </ul>
+      <p>
+        Each method has trade-offs:
+      </p>
+      <ul>
+        <li
+                >Interpreted languages allow quicker feedback during development.</li>
+        <li>Compiled languages typically run faster after compilation.</li>
+      </ul>
+    </content>
+  </section>
+
+  <section id="running-your-first-program">
+    <h1>Running Your First Program</h1>
+    <content>
+      <p>
+        Let’s see how to run a simple program using two different languages:
+      </p>
+      <h2>JavaScript (Interpreted)</h2>
+      <code-block lang="javascript">
+        console.log("Running JavaScript");
+      </code-block>
+      <p>Run this directly in your browser’s console or using Node.js.</p>
+
+      <h2>C (Compiled)</h2>
+      <code-block lang="c">
+        #include &lt;stdio.h&gt;
+
+        int main() {
+            printf("Running C program\n");
+            return 0;
+        }
+      </code-block>
+      <p>Compile it using a compiler (e.g., <code
+                >gcc</code>) before running.</p>
+    </content>
+  </section>
+
+  <section id="execution-errors">
+    <h1>Execution Errors</h1>
+    <content>
+      <p>
+        Sometimes your program runs but doesn’t behave as expected. These are called runtime errors or execution bugs.
+      </p>
+      <ul>
+        <li><b
+                    >Syntax errors</b>: Problems with grammar in the code (prevents execution).</li>
+        <li><b
+                    >Runtime errors</b>: Code runs but crashes or misbehaves due to logic mistakes.</li>
+        <li><b
+                    >Silent errors</b>: Code runs and produces incorrect output without warnings.</li>
+      </ul>
+      <p>
+        Identifying and fixing errors is called <definition
+                    word="debugging"
+                    meaning="the process of locating and correcting errors in code."
+                >debugging</definition>.
+      </p>
+    </content>
+  </section>
+
+  <section id="summary">
+    <h1>Summary</h1>
+    <content>
+      <ul>
+        <li>Programs must be executed to produce results.</li>
+        <li>Languages are either interpreted or compiled.</li>
+        <li>Syntax, runtime, and logic errors can affect execution.</li>
+      </ul>
+      <summary>
+        <p>
+          Understanding how code executes is essential to learning how to program effectively and fix errors when things go wrong.
+        </p>
+      </summary>
+    </content>
+  </section>
+</lesson>

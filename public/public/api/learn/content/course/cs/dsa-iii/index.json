@@ -1,0 +1,13 @@
+{
+  "id": "course/cs/data-structures-and-algorithms-iii",
+  "code": "CS-1400",
+  "title": "Data Structures and Algorithms III",
+  "highlights": [],
+  "description": "In this course you will learn the basics of programming.",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/math/pre-calculus-review"
+    }
+  ]
+}

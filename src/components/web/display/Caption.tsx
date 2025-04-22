@@ -5,11 +5,25 @@ import { Text } from "../core/Text";
 export interface CaptionProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
   children?: ReactNode;
-  level?: IntegerRange<1, 7>;
+  level?: IntegerRange<1, 4>;
 }
 
-export function Caption({ children, ...props }: CaptionProps) {
-  return <Text {...props}>{children}</Text>;
+export const CaptionFontSize = {
+  1: "text-base",
+  2: "text-sm",
+  3: "text-xs",
+};
+
+export function Caption({ children, level = 1, ...props }: CaptionProps) {
+  return (
+    <Text
+      {...props}
+      className={`${CaptionFontSize[level]}  ${props.className ?? ""}`}
+      size={null}
+    >
+      {children}
+    </Text>
+  );
 }
 
 export function C1(props: CaptionProps) {
@@ -22,16 +36,4 @@ export function C2(props: CaptionProps) {
 
 export function C3(props: CaptionProps) {
   return <Caption {...props} level={3} />;
-}
-
-export function C4(props: CaptionProps) {
-  return <Caption {...props} level={4} />;
-}
-
-export function C5(props: CaptionProps) {
-  return <Caption {...props} level={5} />;
-}
-
-export function C6(props: CaptionProps) {
-  return <Caption {...props} level={6} />;
 }

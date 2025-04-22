@@ -1,0 +1,42 @@
+{
+  "/learn": {
+    "/cs": {
+      "/introduction-to-programming": {
+        "visibility": "public",
+        "type": "course",
+        "ref": "course/cs/introduction-to-programming"
+      },
+      "/dsa": {
+        "index": {
+          "visibility": "public",
+          "type": "landing",
+          "ref": "landing/cs/dsa"
+        },
+        "/dsa-i": {
+          "visibility": "public",
+          "type": "course",
+          "ref": "course/cs/dsa-i"
+        },
+        "/dsa-ii": {
+          "visibility": "public",
+          "type": "course",
+          "ref": "course/cs/dsa-ii"
+        }
+      }
+    },
+    "/mathematics": {
+      "/calculus": {
+        "index": {
+          "visibility": "public",
+          "type": "landing",
+          "ref": "landing/math/calculus"
+        },
+        "/calculus-i": {
+          "visibility": "public",
+          "type": "course",
+          "ref": "course/math/calculus-i"
+        }
+      }
+    }
+  }
+}

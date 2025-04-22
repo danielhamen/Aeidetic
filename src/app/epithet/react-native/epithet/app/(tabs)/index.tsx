@@ -3,7 +3,7 @@ import { View } from "react-native";
 import {
   useWord,
   WordProvider,
-  WordWidget,
+  OverviewCard,
 } from "./../../components/WordWidget";
 import { useEffect, useState } from "react";
 import { Word } from "../../../../../api/__api/Modules/APP_WORD_A_DAY/Module";
@@ -19,13 +19,28 @@ export function Overview() {
       }
     }
   }, [word, data, getWordByDate]);
-  return <WordWidget word={word ?? undefined} />;
+  return <OverviewCard word={word ?? undefined} />;
+}
+
+export function Header() {
+  return (
+    <View style={{ padding: 32, backgroundColor: "red", width: "100%" }}></View>
+  );
 }
 
 export default function HomeScreen() {
   return (
     <WordProvider>
-      <View style={{ flexGrow: 1 }}>
+      <View
+        style={{
+          flexGrow: 1,
+          padding: 16,
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+        }}
+      >
+        <Header />
         <Overview />
       </View>
     </WordProvider>

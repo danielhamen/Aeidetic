@@ -1,0 +1,13 @@
+{
+  "id": "course/cs/data-structures-and-algorithms-i",
+  "code": "CS-1200",
+  "title": "Data Structures and Algorithms I",
+  "highlights": [],
+  "description": "In this course you will learn the basics of programming.",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/cs/foundations-of-algorithms"
+    }
+  ]
+}

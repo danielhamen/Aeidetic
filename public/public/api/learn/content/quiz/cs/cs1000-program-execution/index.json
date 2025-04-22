@@ -1,0 +1,14 @@
+{
+  "id": "quiz/cs/cs1000-program-execution",
+  "type": "quiz",
+  "title": "Program Execution Quiz",
+  "description": "Test your understanding of program execution.",
+  "difficulty": "easy",
+  "associates": ["lesson/cs/cs1000-program-execution"],
+  "shuffle": false,
+  "questions": [
+    {
+      "ref": "./problems/q0001.js"
+    }
+  ]
+}

@@ -1,19 +1,10 @@
 import React from "react";
+import { Text as BaseText, TextProps as BaseTextProps } from "../core/Text";
 
-export interface ParagraphProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {
-  children: React.ReactNode;
-  size?: number;
+export function Paragraph(props: BaseTextProps) {
+  return <BaseText {...props} />;
 }
 
-export function Paragraph({ children, ...props }: ParagraphProps) {
-  return (
-    <p {...props} style={{ fontSize: props.size ?? undefined }}>
-      {children}
-    </p>
-  );
-}
-
-export function P(props: ParagraphProps) {
-  return <Paragraph {...props} />;
+export function P(props: BaseTextProps) {
+  return <Paragraph {...props} style={{ lineHeight: 1.6, ...props.style }} />;
 }

@@ -1,0 +1,78 @@
+<lesson>
+  <section id="introduction">
+    <h1>Introduction</h1>
+    <content>
+      <p>
+        Programming is the act of writing instructions that a computer can follow to perform a task.
+      </p>
+      <p>
+        It’s how we tell machines what to do, when to do it, and how to do it — using a language they understand
+      </p>
+    </content>
+  </section>
+  <section id="why-learn-programming">
+    <h1>Why Learn Programming?</h1>
+    <content>
+        <ul>
+            <li>To automate repetitive tasks</li>
+            <li>To build websites, games, or apps</li>
+            <li>To solve real-world problems using code</li>
+            <li>To understand how technology works</li>
+        </ul>
+    </content>
+  </section>
+  <section id="how-it-works">
+    <h1>How It Works</h1>
+    <content>
+    <p
+            >Computers don’t “think” the way we do. They follow step-by-step instructions precisely — even if it results in something incorrect.</p>
+        <p>That’s why code must be:</p>
+        <ul>
+            <li><b>Clear</b>: easy for humans to read ;</li>
+            <li><b>Precise</b>: detailed enough for machines to follow ;</li>
+            <li><b>Logical</b>: follows a correct flow.</li>
+        </ul>
+        <p
+            >Programmings write their code in a programming language. There are many programming languages to choose from, each with its own strengths and weaknesses. Some popular languages include Python, Java, JavaScript, C++, and Ruby. Each language has its own syntax, features, and use cases.</p>
+        <p>An example of code is below which outputs <code
+                >"Hello World!"</code> to the <definition
+                    word="console"
+                    meaning="the console is essentially an output log of human-readable text."
+                >console</definition>.</p>
+        <code-block lang="javascript">
+            console.log("Hello World!");
+        </code-block>
+    </content>
+  </section>
+  <section id="programming-vs-coding">
+    <h1>Programming v. Coding</h1>
+    <content>
+        <p
+            >These terms are often used interchangeably, but they’re not exactly the same:</p>
+            <table>
+                <tr>
+                    <th>Term</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Coding</td>
+                    <td>Writing lines of code using a programming language</td>
+                </tr>
+                <tr>
+                    <td>Programming</td>
+                    <td
+                    >Designing the logic, structure, and flow of a solution before writing code</td>
+                </tr>
+            </table>
+            <p
+            >Overall, coding is part of programming — but programming also involves <b
+                >thinking</b>, <b>planning</b>, and <b>problem-solving</b>.</p>
+                <summary>
+                <p>
+                    <b
+                    >Analogy: </b> Programming is like building a house. Coding is like laying the bricks and mortar, while programming is like designing the blueprint and planning the layout.
+                </p>
+                </summary>
+    </content>
+  </section>
+</lesson>

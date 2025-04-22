@@ -1,0 +1,13 @@
+{
+  "id": "course/cs/introduction-to-programming",
+  "code": "CS-1100",
+  "title": "Introduction to Programming",
+  "highlights": ["Variables & Data Types", "Control Structures", "Functions"],
+  "description": "In this course you will learn the basics of programming.",
+  "prerequisites": [],
+  "outline": [
+    {
+      "ref": "unit/cs/cs1000-programming-fundementals"
+    }
+  ]
+}

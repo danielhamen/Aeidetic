@@ -14,6 +14,14 @@ const nextConfig = {
           source: "/epithet/:path*",
           destination: "/epithet/web/:path*",
         },
+        {
+          source: "/learn/:path*",
+          destination: "/learn",
+        },
+        {
+          source: "/lexicon/:path*",
+          destination: "/lexicon",
+        },
       ],
       fallback: [
         {

@@ -120,13 +120,18 @@ export class WordManager implements IWordManager {
   }
 
   async loadDefaults(): Promise<void> {
+    // Path to data.json
     const dataPath = path.join(__dirname, "data.json");
+
+    // Read data.json
     const wordList = await fs.promises
       .readFile(dataPath, "utf8")
       .then((data) => {
         const words = JSON.parse(data);
         Object.keys(words).forEach((key) => {
           words[key] = WordManager.parseWord(words[key]);
+
+          // Remove if `parseWord` returns undefined
           if (!words[key]) {
             delete words[key];
           }
@@ -151,8 +156,8 @@ export class WordManager implements IWordManager {
       "definition" in obj &&
       "example" in obj &&
       "etymology" in obj &&
-      "pronunciation" in obj &&
-      "ipa" in obj &&
+      // "pronunciation" in obj &&
+      // "ipa" in obj &&
       "partOfSpeech" in obj &&
       "date" in obj &&
       "synonyms" in obj &&

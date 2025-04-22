@@ -6,6 +6,7 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children?: ReactNode;
   font?: TextFont;
   level?: IntegerRange<1, 7>;
+  color?: string;
   weight?: number;
   overrideHtmlElementLevel?: IntegerRange<1, 7>;
 }
@@ -22,7 +23,8 @@ export const HeadingFontSize = {
 export function Heading({
   children,
   level = 1,
-  font = "serif",
+  font = "regular",
+  color = "gray-800",
   weight = 500,
   overrideHtmlElementLevel,
   ...props
@@ -32,7 +34,7 @@ export function Heading({
   return (
     <Tag
       {...props}
-      className={`${fontFor(font).variable} ${HeadingFontSize[Tag]} my-4 ${props.className || ""}`}
+      className={`${fontFor(font).variable} ${HeadingFontSize[Tag]} text-${color} my-4 ${props.className || ""}`}
       style={{ fontWeight: weight ?? 500, ...props.style }}
     >
       {children}
@@ -49,13 +51,13 @@ export function H2(props: HeadingProps) {
 }
 
 export function H3(props: HeadingProps) {
-  return <Heading font="serif_sc" {...props} level={3} />;
+  return <Heading /*font="serif_sc" */ {...props} level={3} />;
 }
 
 export function H4(props: HeadingProps) {
   return (
     <Heading
-      font="serif_sc"
+      // font="serif_sc"
       {...props}
       style={{ margin: 0, ...props.style }}
       level={4}
@@ -64,9 +66,9 @@ export function H4(props: HeadingProps) {
 }
 
 export function H5(props: HeadingProps) {
-  return <Heading font="serif_sc" {...props} level={5} />;
+  return <Heading /*font="serif_sc"*/ {...props} level={5} />;
 }
 
 export function H6(props: HeadingProps) {
-  return <Heading font="serif_sc" {...props} level={6} />;
+  return <Heading /*font="serif_sc" */ {...props} level={6} />;
 }

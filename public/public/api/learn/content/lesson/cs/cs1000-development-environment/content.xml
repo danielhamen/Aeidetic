@@ -1,0 +1,86 @@
+<lesson>
+  <section id="introduction">
+    <h1>Introduction</h1>
+    <content>
+      <p>
+        Before writing code, programmers need a workspace where they can type, run, and test their programs. This workspace is called a <definition
+                    word="development environment"
+                    meaning="the collection of tools and settings used to write, edit, and run code."
+                >development environment</definition>.
+      </p>
+      <p>
+        Choosing the right tools helps you write better code, faster.
+      </p>
+    </content>
+  </section>
+
+  <section id="text-editors">
+    <h1>Text Editors</h1>
+    <content>
+      <p>
+        A text editor is where you write and edit code. It should highlight syntax, help you navigate files, and optionally suggest corrections.
+      </p>
+      <ul>
+        <li><b>VS Code</b>: Popular, fast, and extensible</li>
+        <li><b>Sublime Text</b>: Lightweight with powerful features</li>
+        <li><b>Notepad++</b>: Simple and Windows-friendly</li>
+      </ul>
+    </content>
+  </section>
+
+  <section id="console-and-terminal">
+    <h1>Console &amp; Terminal</h1>
+    <content>
+      <p>
+        The console is where your program outputs text. The terminal is where you run and test your code.
+      </p>
+      <ul>
+        <li><definition
+                        word="Console"
+                        meaning="An output window that displays program results or logs."
+                    >Console</definition> shows what your code prints.</li>
+        <li><definition
+                        word="Terminal"
+                        meaning="A command-line interface to execute scripts and commands."
+                    >Terminal</definition> lets you interact with the system.</li>
+      </ul>
+      <p>
+        Example: In JavaScript, this line prints to the console:
+      </p>
+      <code-block lang="javascript">
+        console.log("This appears in the console");
+      </code-block>
+    </content>
+  </section>
+
+  <section id="web-browsers">
+    <h1>Web Browsers</h1>
+    <content>
+      <p>
+        When coding for the web, your browser is your testing ground. Use developer tools to inspect your code and debug errors.
+      </p>
+      <ul>
+        <li><b>Google Chrome</b>: Powerful dev tools</li>
+        <li><b>Firefox</b>: Clean debugging interface</li>
+        <li><b>Safari</b>: Good for Apple-specific testing</li>
+      </ul>
+    </content>
+  </section>
+
+  <section id="summary">
+    <h1>Summary</h1>
+    <content>
+      <ul>
+        <li>Use a reliable text editor to write code efficiently.</li>
+        <li
+                >Understand how to use the terminal and console to run and test code.</li>
+        <li>Choose a browser with good developer tools for web projects.</li>
+      </ul>
+      <summary>
+        <p>
+          Your development environment is your programming toolkit. Set it up right to code with confidence.
+        </p>
+      </summary>
+    </content>
+  </section>
+</lesson>

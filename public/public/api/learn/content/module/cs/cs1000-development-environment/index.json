@@ -1,0 +1,11 @@
+{
+  "id": "module/cs/cs1000-development-environment",
+  "name": "Development Environment",
+  "description": "",
+  "topics": [
+    {
+      "type": "lesson",
+      "ref": "lesson/cs/cs1000-development-environment"
+    }
+  ]
+}

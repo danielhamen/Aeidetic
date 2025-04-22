@@ -1,0 +1,11 @@
+{
+  "id": "module/cs/cs1000-what-is-programming",
+  "name": "What is Programming?",
+  "description": "",
+  "topics": [
+    {
+      "type": "lesson",
+      "ref": "lesson/cs/cs1000-what-is-programming"
+    }
+  ]
+}

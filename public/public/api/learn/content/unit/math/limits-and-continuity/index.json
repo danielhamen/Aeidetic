@@ -1,0 +1,10 @@
+{
+  "id": "unit/math/limits-and-continuity",
+  "title": "Limits & Continuity",
+  "description": "This unit covers the concepts of limits and continuity in calculus.",
+  "modules": [
+    {
+      "ref": "module/math/introduction-to-limits"
+    }
+  ]
+}
