@@ -12,7 +12,7 @@ export const TimeProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(Math.floor(Date.now() / 1000)); // Update time every second
-    }, 20);
+    }, 1000);
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
