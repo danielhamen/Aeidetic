@@ -1,6 +1,6 @@
 "use client";
 import { TailwindColorName } from "api/components/web/core/Text";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { usePath } from "./usePath";
 
 export type AccentColor = TailwindColorName;
@@ -9,30 +9,27 @@ export const AccentContext = createContext<AccentColor | null>(null);
 
 export const AccentProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePath();
-  const [accent, setAccent] = useState<AccentColor>("blue");
-  useEffect(() => {
+
+  const accent = useMemo<AccentColor>(() => {
     if (pathname) {
       const path = pathname.split("/").filter((s) => s.trim() !== "");
       if (path.length > 0) {
         switch (path[0]) {
           case "lexos":
-            setAccent("slate");
-            break;
+            return "slate";
           case "lexicon":
-            setAccent("amber");
-            break;
+            return "amber";
           case "learn":
-            setAccent("indigo");
-            break;
+            return "indigo";
           case "mark":
-            setAccent("red");
-            break;
+            return "red";
           default:
-            setAccent("blue");
+            return "blue";
         }
       }
     }
-  }, [accent, pathname]);
+    return "blue";
+  }, [pathname]);
 
   return (
     <AccentContext.Provider value={accent}>{children}</AccentContext.Provider>
