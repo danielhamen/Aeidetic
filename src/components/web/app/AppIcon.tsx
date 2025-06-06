@@ -1,22 +1,25 @@
+"use client";
 import React from "react";
 import { Flex, Icon } from "api/components/web";
+import { useAccent } from "api/hooks/useAccent";
+import {
+  backgroundColorMap,
+  TailwindColor,
+  TailwindColorName,
+} from "../core/Text";
 
 export interface AppIconProps {
   name: string;
   fill?: boolean;
-  color?: "indigo" | "green" | "orange" | "amber";
+  color?: TailwindColorName;
 }
 
-const colorMap = {
-  indigo: "bg-indigo-500",
-  green: "bg-green-500",
-  orange: "bg-orange-500",
-  amber: "bg-amber-500",
-};
-
-export function AppIcon({ name, fill = true, color = "indigo" }: AppIconProps) {
+export function AppIcon({ name, fill = true, color }: AppIconProps) {
+  const accentColor = useAccent();
   return (
-    <Flex className={`p-1 ${colorMap[color] ?? "bg-indigo-500"} rounded-md`}>
+    <Flex
+      className={`p-1 ${backgroundColorMap[((color ?? accentColor) + "-500") as TailwindColor]} rounded-md`}
+    >
       <Icon name={name} color={"white"} fill={fill} size={24} />
     </Flex>
   );

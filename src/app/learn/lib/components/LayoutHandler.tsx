@@ -32,8 +32,10 @@ import {
   TopicType,
   Unit,
 } from "../types";
+import { EditorLayout } from "./editor/EditorLayout";
 import { LandingView } from "./LandingView";
 import { CourseLayout } from "./CourseLayout";
+import { LearnHome } from "./LearnHome";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -390,6 +392,19 @@ export function LayoutHandler() {
       let route: Route | null = null;
       let obj: Router = router;
       let i = 0;
+
+      // show homepage
+      if (path.length === 1) {
+        setLayout(<LearnHome />);
+        return;
+      }
+
+      // show editor
+      if (path.length === 2 && path[1] === "editor") {
+        setLayout(<EditorLayout />);
+        return;
+      }
+
       while (i < path.length) {
         const slug = `/${path[i]}`; // path slug conforming to `/${string}`
         if (!(slug in obj)) {

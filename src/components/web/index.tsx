@@ -66,8 +66,8 @@ export { View as CView } from "./core/View";
 export type { ViewProps as CViewProps } from "./core/View";
 
 // Data
-export { Chart, ChartError } from "./data/Chart";
-export type { ChartProps } from "./data/Chart";
+// export { Chart, ChartError } from "./data/Chart";
+// export type { ChartProps } from "./data/Chart";
 
 // Display
 export { Bold, B } from "./display/Bold";
@@ -111,6 +111,9 @@ export type { SnackbarProps } from "./feedback/Snackbar";
 
 export { Toast } from "./feedback/Toast";
 export type { ToastProps } from "./feedback/Toast";
+
+export { Touchable } from "./feedback/Touchable";
+export type { TouchableProps, TouchableAnimation } from "./feedback/Touchable";
 
 // Form
 export { InputGroup } from "./form/InputGroup";

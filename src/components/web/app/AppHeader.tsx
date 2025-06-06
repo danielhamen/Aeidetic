@@ -1,16 +1,39 @@
-import { Flex, Text, Button, P } from "api/components/web";
+import { Flex, Text, Button, Icon } from "api/components/web";
+import { useAuth } from "api/lib/hooks/useAuth";
 import { ReactNode } from "react";
 
 export interface AppHeaderProps {
   icon: ReactNode;
 
-  title: string;
+  title: string | ReactNode;
 
   subtitle?: string;
 
   showUserMenu?: boolean;
 
   children?: ReactNode;
+}
+
+function UserMenu() {
+  const auth = useAuth();
+  if (auth.loading) {
+    return <Flex></Flex>;
+  }
+
+  return (
+    <Flex>
+      {auth.user ? (
+        <Flex direction="row" gap={3}>
+          <Icon name="account_circle" />
+          <Text>{"@danielhamen_"}</Text>
+        </Flex>
+      ) : (
+        <Button buttonStyle="outline" textAlign="center">
+          Join Today!
+        </Button>
+      )}
+    </Flex>
+  );
 }
 
 export function AppHeader({
@@ -29,15 +52,19 @@ export function AppHeader({
       <Flex align="start" direction="row" gap={2}>
         <Flex className={`mt-2`}>{icon}</Flex>
         <Flex direction="column">
-          <Text weight={600} size={32}>
-            {title}
-          </Text>
-          {subtitle && <Text weight={300}>{subtitle}</Text>}
+          {typeof title === "string" ? (
+            <Text fontWeight={"semibold"} fontSize={28}>
+              {title}
+            </Text>
+          ) : (
+            title
+          )}
+          {subtitle && <Text fontWeight="300">{subtitle}</Text>}
         </Flex>
       </Flex>
       <Flex direction="row" gap={4} align="center" className={`ml-auto w-fit`}>
         {children}
-        {showUserMenu ? <Button buttonStyle="outline"> Log in </Button> : <></>}
+        {showUserMenu ? <UserMenu /> : <></>}
       </Flex>
     </Flex>
   );

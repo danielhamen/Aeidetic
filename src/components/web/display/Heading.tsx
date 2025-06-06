@@ -34,7 +34,7 @@ export function Heading({
   return (
     <Tag
       {...props}
-      className={`${fontFor(font).variable} ${HeadingFontSize[Tag]} text-${color} my-4 ${props.className || ""}`}
+      className={`${fontFor(font).variable} ${HeadingFontSize[Tag]} text-${color} ${props.className || ""}`}
       style={{ fontWeight: weight ?? 500, ...props.style }}
     >
       {children}

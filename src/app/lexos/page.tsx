@@ -19,6 +19,10 @@ import {
   CText,
   Icon,
   Text,
+  Button,
+  H5,
+  Divider,
+  EnumAttribute,
 } from "api/components/web";
 import { Highlight as Prism, themes } from "prism-react-renderer";
 import { SP } from "next/dist/shared/lib/utils";
@@ -28,6 +32,7 @@ function Header() {
     <AppHeader
       title="Lexos"
       icon={<AppIcon name="heap_snapshot_thumbnail" />}
+      showUserMenu={true}
     />
   );
 }
@@ -181,6 +186,57 @@ function InputWithInlineAutocompletion({
   );
 }
 
+function SideMenuItem({ icon, text }: { icon: ReactNode; text: string }) {
+  return (
+    <Flex
+      direction="row"
+      className="p-4 gap-2 select-none cursor-pointer border border-gray-50 bg-white rounded-lg"
+      align="center"
+    >
+      {icon}
+      <Text fontSize={15}>{text}</Text>
+    </Flex>
+  );
+}
+
+function SideMenu() {
+  return (
+    <Flex direction="row">
+      {/* Content */}
+      <Flex className="w-96 bg-gray-100 p-1" gap={2}>
+        {/* Start New Game */}
+        <SideMenuItem
+          text="New Game"
+          icon={<Icon name="start" color="gray-600" size={20} />}
+        />
+
+        {/* Leaderboard */}
+        <SideMenuItem
+          text="Leaderboard"
+          icon={<Icon name="leaderboard" color="gray-600" size={20} />}
+        />
+
+        {/* My Games */}
+        <SideMenuItem
+          text="My Games"
+          icon={<Icon name="receipt_long" color="gray-600" size={20} />}
+        />
+
+        {/* Learn */}
+        <SideMenuItem
+          text="Learn"
+          icon={<Icon name="school" color="gray-600" size={20} />}
+        />
+      </Flex>
+
+      {/* Handle */}
+      <Flex className="w-[1px] h-full">
+        <Flex className="w-full h-full cursor-grab bg-blue-600"></Flex>
+      </Flex>
+    </Flex>
+  );
+}
+
 const LanguageContext = createContext<string[] | null>(null);
 const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [values, setValues] = useState<string[] | null>(null);
@@ -212,6 +268,74 @@ function safeStartsWith(str: string, prefix: string): boolean {
   prefix = prefix.replace(/\#/g, "sharp");
 
   return str.startsWith(prefix);
+}
+
+function NewGame() {
+  const [languageType, setLanguageType] = useState<string>("spoken");
+  const [difficulty, setDifficulty] = useState<string>("easy");
+
+  const sectionHeadingProps = { className: "text-md mt-4 mb-2" };
+  return (
+    <Flex
+      className="p-4 border border-gray-50 bg-white rounded-lg w-2xl h-fit shadow-md"
+      gap={2}
+    >
+      <H3>New Game</H3>
+      <Divider />
+      <Flex
+        direction="column"
+        gap={2}
+        className="bg-gray-50 p-2 mt-4 shadow-inner rounded-xl"
+      >
+        <Text fontSize="lg">Game Settings</Text>
+        <Flex>
+          <Text {...sectionHeadingProps}>Difficulty</Text>
+          <EnumAttribute
+            items={[
+              ["Easy", "easy"],
+              ["Medium", "medium"],
+              ["Hard", "hard"],
+            ]}
+            viewStyle="fill"
+            width={"full"}
+            value={difficulty}
+            setValue={setDifficulty}
+            textAlign="center"
+          />
+        </Flex>
+        <Flex>
+          <Text {...sectionHeadingProps}>Language Type</Text>
+          <EnumAttribute
+            items={[
+              ["Spoken", "spoken"],
+              ["Coding", "coding"],
+              ["Mixed", "mixed"],
+            ]}
+            viewStyle="default"
+            width={"full"}
+            value={languageType}
+            setValue={setLanguageType}
+            textAlign="left"
+          />
+        </Flex>
+        <Flex>
+          <Text {...sectionHeadingProps}>Difficulty</Text>
+          <EnumAttribute
+            items={[
+              ["Easy", "easy"],
+              ["Medium", "medium"],
+              ["Hard", "hard"],
+            ]}
+            viewStyle="fill"
+            width={"full"}
+            value={difficulty}
+            setValue={setDifficulty}
+            textAlign="center"
+          />
+        </Flex>
+      </Flex>
+    </Flex>
+  );
 }
 
 function QuizQuestion({ inputType }: { inputType: "choices" | "text" }) {
@@ -282,12 +406,27 @@ function sum(x, y) {
   );
 }
 
+function Content() {
+  return <Flex grow></Flex>;
+}
+
 function Layout() {
   return (
     <Flex grow className="relative">
       <Header />
-      <Flex grow className="bg-gray-50" justify="center" align="center">
-        <QuizQuestion inputType="text" />
+      <Flex grow className="bg-gray-50" direction="row">
+        <SideMenu />
+        <Content />
+      </Flex>
+      <Flex
+        className="absolute top-0 left-0 w-screen h-screen"
+        align="center"
+        justify="center"
+      >
+        <Flex className="absolute left-0 top-0 w-screen h-screen bg-black opacity-20 z-10"></Flex>
+        <Flex className="z-20">
+          <NewGame />
+        </Flex>
       </Flex>
     </Flex>
   );

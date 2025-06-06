@@ -1,11 +1,8 @@
-import React, { ReactNode } from "react";
-import { IntegerRange } from "api/lib/types/IntegerRange";
-import { Text } from "../core/Text";
+import React from "react";
+import { Text, TextProps } from "../core/Text";
 
-export interface CaptionProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {
-  children?: ReactNode;
-  level?: IntegerRange<1, 4>;
+export interface CaptionProps extends TextProps {
+  level?: 1 | 2 | 3;
 }
 
 export const CaptionFontSize = {
@@ -19,7 +16,7 @@ export function Caption({ children, level = 1, ...props }: CaptionProps) {
     <Text
       {...props}
       className={`${CaptionFontSize[level]}  ${props.className ?? ""}`}
-      size={null}
+      fontSize={null}
     >
       {children}
     </Text>

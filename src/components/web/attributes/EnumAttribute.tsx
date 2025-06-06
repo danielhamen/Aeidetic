@@ -8,18 +8,26 @@ import {
   WidthProvider,
 } from "./CustomAttribute";
 import { Icon } from "../icon/Icon";
+import clsx from "clsx";
+import { TailwindTextAlign } from "../core/Text";
+import { useAccent } from "api/hooks/useAccent";
+import { Touchable } from "../feedback/Touchable";
+export type EnumLabel = string;
+export type EnumID = string;
 
 /**
  * A tuple representing an enum item, where:
  * - The first element is the display label.
  * - The second element is the actual value.
  */
-export type EnumRecord = [label: string, value: string];
+export type EnumRecord = [label: EnumLabel, id: EnumID];
+
+export type EnumViewStyle = "default" | "fill";
 
 /**
  * Props for the `EnumAttribute` component.
  */
-export interface EnumAttributeProps extends AttributeProps<EnumRecord> {
+export interface EnumAttributeProps extends AttributeProps<EnumID> {
   /**
    * A list of available enum items (each item is a [label, value] tuple).
    */
@@ -44,6 +52,10 @@ export interface EnumAttributeProps extends AttributeProps<EnumRecord> {
    * Defaults to `200`.
    */
   maxHeight?: number;
+
+  viewStyle?: EnumViewStyle;
+
+  textAlign?: "left" | "center" | "right" | "justify";
 }
 
 /**
@@ -63,10 +75,15 @@ export function EnumAttribute({
   disabled = false,
   readOnly = false,
   maxHeight = 200,
+  viewStyle = "default",
+  textAlign = "left",
   renderItem: RenderItem = ({ item, index }) => (
-    <Text key={index}>{item[0]}</Text>
+    <Text key={index} textColor={null} fontSize="md">
+      {item[0]}
+    </Text>
   ),
 }: EnumAttributeProps) {
+  const accentColor = useAccent();
   // State & reference definitions
   const [expanded, setExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -108,59 +125,79 @@ export function EnumAttribute({
 
   return (
     <WidthProvider width={width}>
-      <Flex className="relative select-none" ref={containerRef}>
+      <Flex className="relative select-none w-full" ref={containerRef}>
         {/* Primary display (selected item) */}
-        <Flex
-          className={`border border-gray-200 rounded-md p-1 ${
-            disabled ? "bg-gray-100" : ""
-          }`}
-          style={{
-            cursor: disabled || readOnly ? "not-allowed" : "pointer",
-          }}
-          onClick={() => {
-            if (!disabled && !readOnly) {
-              setExpanded(!expanded);
-            }
-          }}
-        >
-          <RenderItem item={value} index={-1} />
+        <Touchable animation="scale" scaleFactor="0.99">
           <Flex
-            className="absolute right-0 top-1/2 -translate-y-1/4 -translate-x-1"
-            align="center"
-            justify="center"
+            className={`relative border border-gray-200 rounded-lg py-2 px-4  ${
+              disabled ? "bg-gray-100" : " bg-white"
+            } shadow-sm rounded-lg`}
+            style={{
+              cursor: disabled || readOnly ? "not-allowed" : "pointer",
+              display: viewStyle === "default" ? "flex" : "none",
+            }}
+            onClick={() => {
+              if (!disabled && !readOnly) {
+                setExpanded(!expanded);
+              }
+            }}
           >
-            <Icon name={expanded ? "unfold_less" : "unfold_more"} size={16} />
+            <RenderItem
+              item={items.find((item) => item[1] === value) as EnumRecord}
+              index={-1}
+            />
+            <Flex
+              className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-1"
+              align="center"
+              justify="center"
+            >
+              <Icon name={expanded ? "unfold_less" : "unfold_more"} size={16} />
+            </Flex>
           </Flex>
-        </Flex>
+        </Touchable>
 
         {/* Dropdown list of items */}
         <Flex
-          className="absolute transition-all duration-150 border border-gray-200 w-full rounded-lg top-full p-1"
-          gap={4}
-          style={{
-            opacity: expanded ? 1 : 0,
-            pointerEvents: expanded ? "auto" : "none",
-            transform: `translateY(${expanded ? 4 : 0}px)`,
-            maxHeight: maxHeight,
-            overflowY: "auto",
-          }}
+          className={clsx(
+            `${viewStyle === "default" ? "absolute" : ""} transition-all duration-150 border border-gray-200 w-full rounded-lg top-full p-1 bg-white z-30`,
+          )}
+          gap={1}
+          direction={viewStyle === "default" ? "column" : "row"}
+          style={
+            viewStyle === "default"
+              ? {
+                  opacity: expanded ? 1 : 0,
+                  pointerEvents: expanded ? "auto" : "none",
+                  transform: `translateY(${expanded ? 4 : 0}px)`,
+                  maxHeight: maxHeight,
+                  overflowY: "auto",
+                }
+              : {}
+          }
         >
           {items.map((item, i) => (
-            <Flex
+            <Touchable
               key={i}
-              grow
-              onClick={() => {
-                if (!disabled) {
-                  setValue(item);
-                  setExpanded(false);
-                }
-              }}
-              className={`${item[0] === value[0] ? "bg-blue-200" : ""} hover:${
-                item[0] === value[0] ? "bg-blue-200" : "bg-blue-50"
-              } active:bg-blue-100 rounded-md pl-1 cursor-pointer`}
+              animation="scale"
+              scaleFactor={viewStyle === "default" ? "0.99" : "0.95"}
             >
-              <RenderItem item={item} index={i} />
-            </Flex>
+              <Flex
+                grow
+                onClick={() => {
+                  if (!disabled) {
+                    setValue(item[1]);
+                    setExpanded(false);
+                  }
+                }}
+                className={`${item[1] === value ? "bg-" + accentColor + "-500 text-white" : ""} hover:${
+                  item[1] === value
+                    ? "bg-" + accentColor + "-300"
+                    : "bg-" + accentColor + "-50"
+                } active:${item[1] === value ? "bg-" + accentColor + "-500" : "bg-" + accentColor + "-100"} rounded-lg px-2 py-2 cursor-pointer ${("text-" + (textAlign ?? "left")) as TailwindTextAlign}`}
+              >
+                <RenderItem item={item} index={i} />
+              </Flex>
+            </Touchable>
           ))}
         </Flex>
       </Flex>
