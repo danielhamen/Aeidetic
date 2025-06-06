@@ -68,6 +68,16 @@ export type { ViewProps as CViewProps } from "./core/View";
 // Data
 // export { Chart, ChartError } from "./data/Chart";
 // export type { ChartProps } from "./data/Chart";
+export { Table } from "./data/Table";
+export type { TableProps } from "./data/Table";
+export { THead } from "./data/THead";
+export type { THeadProps } from "./data/THead";
+export { TBody } from "./data/TBody";
+export type { TBodyProps } from "./data/TBody";
+export { Tr } from "./data/Tr";
+export type { TrProps } from "./data/Tr";
+export { Td } from "./data/Td";
+export type { TdProps } from "./data/Td";
 
 // Display
 export { Bold, B } from "./display/Bold";
@@ -101,6 +111,10 @@ export type { TitleProps } from "./display/Title";
 
 export { InlineMath, Math } from "./display/InlineMath";
 export { BlockMath } from "./display/BlockMath";
+export { List } from "./display/List";
+export type { ListProps } from "./display/List";
+export { ListItem } from "./display/ListItem";
+export type { ListItemProps } from "./display/ListItem";
 
 // Feedback
 export { Message } from "./feedback/Message";
