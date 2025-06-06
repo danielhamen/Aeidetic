@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { Flex } from "../layout/Flex";
 
 export type AttributeWidth =
@@ -28,41 +28,26 @@ export function WidthProvider({
   width: AttributeWidth;
   children: ReactNode;
 }) {
-  const [containerWidth, setContainerWidth] = useState<string | number | null>(
-    null,
-  );
-  useEffect(() => {
+  const style = useMemo(() => {
     switch (width) {
       case "full":
-        setContainerWidth("100%");
-        break;
+        return { width: "100%" };
       case "fit":
-        setContainerWidth("fit-content");
-        break;
+        return { width: "fit-content" };
       case "auto":
-        setContainerWidth("auto");
-        break;
+        return { width: "auto" };
       case "short":
-        setContainerWidth(200);
-        break;
+        return { width: 200, minWidth: 200 };
       case "medium":
-        setContainerWidth(270);
-        break;
+        return { width: 270, minWidth: 270 };
       case "long":
-        setContainerWidth(350);
-        break;
+        return { width: 350, minWidth: 350 };
+      default:
+        return {};
     }
   }, [width]);
+
   return (
-    <Flex
-      style={{
-        minWidth:
-          typeof containerWidth === "number" ? containerWidth : undefined,
-        width: containerWidth ?? undefined,
-        maxWidth: "100%",
-      }}
-    >
-      {children}
-    </Flex>
+    <Flex style={{ maxWidth: "100%", ...style }}>{children}</Flex>
   );
 }
